@@ -1,4 +1,7 @@
 import json
+import os
+import time
+import errno
 
 from TwitterAPI import TwitterAPI
 
@@ -19,3 +22,13 @@ class TrendAnalyser:
                               details['access_token_key'],
                               details['access_token_secret'])
 
+    def save_data(self, response, location):
+        filename = os.path.join(self.conf['save_data_location'], location + "_" + str(int(time.time())) + ".json")
+
+        try:
+            os.makedirs(os.path.dirname(filename))
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
+        json.dump(response, open(filename, 'w'))
