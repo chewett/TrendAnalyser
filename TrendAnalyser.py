@@ -4,14 +4,14 @@ from TwitterAPI import TwitterAPI
 
 class TrendAnalyser:
 
-    def __init__(config_location="config.json"):
-        load_conf(config_location)
-        load_api()
+    def __init__(self, config_location="conf.json"):
+        self.load_conf(config_location)
+        self.load_api()
 
-    def load_conf(config_location):
-        self.conf json.load(open(config_location))
+    def load_conf(self, config_location):
+        self.conf = json.load(open(config_location))
 
-    def load_api():
+    def load_api(self):
         details = json.load(open(self.conf['twitter_key_location']))
 
         self.api = TwitterAPI(details['consumer_key'],
