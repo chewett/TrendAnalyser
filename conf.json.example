@@ -1,1 +1,4 @@
-{"twitter_key_location": "/home/user/twitter.json"}
+{
+    "twitter_key_location": "/home/user/twitter.json",
+    "save_data_location" : "/home/user/tweet_data/"
+}
