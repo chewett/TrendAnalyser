@@ -15,7 +15,7 @@ response = TA.api.request("trends/place", {"id": woeid})
 response_json = json.loads(response.text)
 
 
-TA.save_data(response_json, "trends/place/woeid_" + str(woeid))
+TA.save_trend_data(response_json, woeid)
 
 print "Time: " + str(datetime.datetime.now())
 print "Got trends for place woeid: " + str(woeid)
