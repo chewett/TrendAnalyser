@@ -30,8 +30,11 @@ class TrendAnalyser:
         self.save_data(json_data, filelocation)
 
     def save_twitter_sample_data(self, json_data):
+        time_folder = int(time.time() / 300) * 300
+
         filelocation = os.path.join(self.conf['save_data_location'],
-                                "statuses/sample/" + str(int(time.time())) + "_" +
+                                "statuses/sample", str(time_folder),
+                                str(int(time.time())) + "_" +
                                 md5.md5(json.dumps(json_data)).hexdigest() +
                                 ".json")
         self.save_data(json_data, filelocation)
