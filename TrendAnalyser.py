@@ -22,7 +22,7 @@ class TrendAnalyser:
                               details['access_token_key'],
                               details['access_token_secret'])
 
-    def save_data(self, response, location):
+    def save_data(self, json_data, location):
         filename = os.path.join(self.conf['save_data_location'], location + "_" + str(int(time.time())) + ".json")
 
         try:
@@ -31,4 +31,4 @@ class TrendAnalyser:
             if e.errno != errno.EEXIST:
                 raise
 
-        json.dump(response, open(filename, 'w'))
+        json.dump(json_data, open(filename, 'w'))
