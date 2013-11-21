@@ -2,6 +2,7 @@ import json
 import os
 import time
 import errno
+import md5
 
 from TwitterAPI import TwitterAPI
 
@@ -22,13 +23,27 @@ class TrendAnalyser:
                               details['access_token_key'],
                               details['access_token_secret'])
 
+    def save_trend_data(self, json_data, woeid):
+        filelocation = os.path.join(self.conf['save_data_location'],
+                                "trends/place/weoid_" + str(woeid) + "_" +
+                                str(int(time.time())) + ".json")
+        self.save_data(json_data, filelocation)
+
+    def save_twitter_sample_data(self, json_data):
+        filelocation = os.path.join(self.conf['save_data_location'],
+                                "statuses/sample/" + str(int(time.time())) + "_" +
+                                md5.md5(json.dumps(json_data)).hexdigest() +
+                                ".json")
+        self.save_data(json_data, filelocation)
+
+
+
     def save_data(self, json_data, location):
-        filename = os.path.join(self.conf['save_data_location'], location + "_" + str(int(time.time())) + ".json")
 
         try:
-            os.makedirs(os.path.dirname(filename))
+            os.makedirs(os.path.dirname(location))
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
 
-        json.dump(json_data, open(filename, 'w'))
+        json.dump(json_data, open(location, 'w'))
