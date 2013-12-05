@@ -3,7 +3,7 @@ from TwitterAPI import TwitterAPI
 from time import gmtime, strftime
 
 def load_conf():
-    conf = json.load(open("conf.json"))
+    conf = json.load(open("../conf.json"))
     return conf
 
 def get_api():
