@@ -5,12 +5,20 @@ import errno
 import md5
 
 from TwitterAPI import TwitterAPI
+from WookieDb import WookieDb
+
 
 class TrendAnalyser:
 
     def __init__(self, config_location="conf.json"):
         self.load_conf(config_location)
         self.load_api()
+
+        self.db = WookieDb(self.conf['database_host'],
+                           self.conf['database_username'],
+                           self.conf['database_password'],
+                           self.conf['database_schema'],
+                           select_type='dict')
 
     def load_conf(self, config_location):
         self.conf = json.load(open(config_location))
@@ -50,6 +58,28 @@ class TrendAnalyser:
         self.save_data(json_data, filelocation)
 
 
+    def start_stream_filter(self):
+        terms = self._get_filter_keywords()
+
+        print "Loading terms from database"
+        print "Terms to download data for:"
+        for term in terms:
+            print term
+        conjoined_terms = ','.join(terms)
+
+        print "Starting to download data"
+        response = self.api.request("statuses/filter", {"track" : conjoined_terms})
+
+        for item in response.get_iterator():
+            self.save_twitter_filter_data(item)
+
+    def _get_filter_keywords(self):
+        terms = self.db.select("filter_status_terms", "*")
+        combined_terms = []
+        for term in terms:
+            combined_terms.append(term['term_name'])
+
+        return combined_terms
 
     def save_data(self, json_data, location):
 
