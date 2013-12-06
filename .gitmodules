@@ -1,0 +1,3 @@
+[submodule "WookieDb"]
+	path = WookieDb
+	url = github:/chewett/WookieDb.git
