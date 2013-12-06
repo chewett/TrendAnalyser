@@ -3,6 +3,7 @@ import os
 import time
 import errno
 import md5
+import uuid
 
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
@@ -53,7 +54,7 @@ class TrendAnalyser:
         filelocation = os.path.join(self.conf['save_data_location'],
                                 "statuses/filter", str(time_folder),
                                 str(int(time.time())) + "_" +
-                                md5.md5(json.dumps(json_data)).hexdigest() +
+                                uuid.uuid4().hex +
                                 ".json")
         self.save_data(json_data, filelocation)
 
@@ -70,8 +71,16 @@ class TrendAnalyser:
         print "Starting to download data"
         response = self.api.request("statuses/filter", {"track" : conjoined_terms})
 
+        items = 0
+        item_data = []
         for item in response.get_iterator():
-            self.save_twitter_filter_data(item)
+            items += 1
+            item_data.append(item)
+
+            if items > 1000:
+                self.save_twitter_filter_data(item_data)
+                item_data = []
+                items = 0
 
     def _get_filter_keywords(self):
         terms = self.db.select("filter_status_terms", "*")
