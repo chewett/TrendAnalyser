@@ -90,6 +90,32 @@ class TrendAnalyser:
 
         return combined_terms
 
+    def download_trend_list(self, woeid):
+        response = self.api.request("trends/place", {"id" : woeid})
+        response_json = json.loads(response.text)[0]
+
+        print response_json
+
+        trend_top_list_data = {
+            'woeid' : response_json['locations'][0]['woeid'],
+            'as_of' : response_json['as_of'],
+            'created_at' : response_json['created_at']
+        }
+
+
+        for trend in response_json['trends']:
+
+            trend_data = {
+                'trend_top_list_id' : 0,
+                'name' : trend['name'],
+                'events' : trend['events'],
+                'promoted_content' : trend['promoted_content']
+            }
+            print trend_data
+
+        print trend_top_list_data
+
+
     def save_data(self, json_data, location):
 
         try:
