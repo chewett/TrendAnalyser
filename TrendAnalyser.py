@@ -102,19 +102,19 @@ class TrendAnalyser:
             'created_at' : response_json['created_at']
         }
 
+        self.db.insert("trend_top_list", trend_top_list_data)
+        trend_top_list_id = self.db.get_last_autoincrement()
 
         for trend in response_json['trends']:
-
             trend_data = {
-                'trend_top_list_id' : 0,
+                'trend_top_list_id' : trend_top_list_id,
                 'name' : trend['name'],
                 'events' : trend['events'],
                 'promoted_content' : trend['promoted_content']
             }
-            print trend_data
+            self.db.insert("trend_top_list_trends", trend_data)
 
-        print trend_top_list_data
-
+        self.db.connection.commit()
 
     def save_data(self, json_data, location):
 
