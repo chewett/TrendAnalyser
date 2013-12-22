@@ -16,6 +16,10 @@ def filters_json():
 def trends_json():
     return {"res" : TA._get_latest_trends()}
 
+@route("/trend_search.json/<term>")
+def trends_search_json(term):
+    return {"res" : TA._get_trending_details(term)}
+
 @route("/<filename>")
 def static_resource(filename):
     return static_file("/static/"+filename, root=PATH)
