@@ -139,6 +139,12 @@ class TrendAnalyser:
         search_details = {'trends' : details, 'search_term' : search_term}
         return search_details
 
+    def _get_hashtag_details(self, search_term):
+        details = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.*",
+                                 "WHERE hashtag = '"+ search_term +"'");
+        search_details = {'hashtags' : details, 'hashag' : search_term}
+        return search_details
+
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
         response_json = json.loads(response.text)[0]
