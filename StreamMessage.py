@@ -17,6 +17,15 @@ class StreamMessage:
             pass
 
         try:
+            if "disconnect" in self.data:
+                print "We have loaded a disconnect object and will close the program"
+                print "Disconnect message payload:"
+                print self.data['disconnect']
+                exit()
+        except KeyError:
+            pass
+
+        try:
             if "text" in self.data:
                 return "tweet"
         except KeyError:
