@@ -8,6 +8,10 @@ app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
 
+@route("/hashtags.json/<term>")
+def hashtags_search_json(term):
+    return {"res" : TA._get_hashtag_details(term)}
+
 @route("/filters.json")
 def filters_json():
     return {"res" : TA._get_filter_keywords()}
