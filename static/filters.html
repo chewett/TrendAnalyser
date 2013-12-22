@@ -3,6 +3,15 @@
 <head>
     <title>Filter Terms</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $.getJSON("filters.json", function(data) {
+            res = data.res;
+            $("#filter_terms").html();
+            for (i in res) {
+                $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
+            }
+        });
+    </script>
 </head>
 
 <body>
