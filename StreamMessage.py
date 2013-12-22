@@ -6,9 +6,16 @@ class StreamMessage:
         self.data = json.loads(tweet_data)
 
     def get_type(self):
-        if "delete" in self.data:
-            return "delete"
-        elif "text" in self.data:
-            return "tweet"
-        else:
-            return "unknown"
+        try:
+            if "delete" in self.data:
+                return "delete"
+        except KeyError:
+            pass
+
+        try:
+            if "text" in self.data:
+                return "tweet"
+        except KeyError:
+            pass
+
+        return "unknown"
