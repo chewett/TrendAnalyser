@@ -8,6 +8,7 @@ import uuid
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
 from StreamMessage import StreamMessage
+import _mysql_exceptions
 
 class TrendAnalyser:
 
@@ -59,7 +60,13 @@ class TrendAnalyser:
 
                 for hashtag in msg.get_hashtags():
                     tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
-                    self.db.insert("tweet_hashtags", tweet_hashtags)
+                    try:
+                        self.db.insert("tweet_hashtags", tweet_hashtags)
+                    except _mysql_exceptions.IntegrityError as e:
+                        if e[0] == 1062: #Duplicate error, ignore it as they have put multiple hashtags in the message
+                            pass
+                        else:
+                            raise
 
                 self.db.commit()
 
