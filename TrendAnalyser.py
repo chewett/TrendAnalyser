@@ -11,9 +11,10 @@ from WookieDb import WookieDb
 
 class TrendAnalyser:
 
-    def __init__(self, config_location="conf.json"):
+    def __init__(self, config_location="conf.json", load_api=True):
         self.load_conf(config_location)
-        self.load_api()
+        if load_api:
+            self.load_api()
 
         self.db = WookieDb(self.conf['database_host'],
                            self.conf['database_username'],
