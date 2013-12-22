@@ -121,8 +121,6 @@ class TrendAnalyser:
         response = self.api.request("trends/place", {"id" : woeid})
         response_json = json.loads(response.text)[0]
 
-        print response_json
-
         trend_top_list_data = {
             'woeid' : response_json['locations'][0]['woeid'],
             'as_of' : response_json['as_of'],
