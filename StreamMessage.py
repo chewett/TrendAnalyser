@@ -8,5 +8,7 @@ class StreamMessage:
     def get_type(self):
         if self.data['delete']:
             return "delete"
+        elif "text" in self.data:
+            return "tweet"
         else:
             return "unknown"
