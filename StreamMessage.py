@@ -23,3 +23,10 @@ class StreamMessage:
             pass
 
         return "unknown"
+
+    def get_hashtags(self):
+        hashtags = []
+        for hashtag in self.data['entities']['hashtags']:
+            hashtags.append(hashtag['text'])
+
+        return hashtags
