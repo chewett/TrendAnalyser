@@ -7,7 +7,7 @@ import uuid
 
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
-
+from StreamMessage import StreamMessage
 
 class TrendAnalyser:
 
@@ -48,6 +48,20 @@ class TrendAnalyser:
                                 md5.md5(json.dumps(json_data)).hexdigest() +
                                 ".json")
         self.save_data(json_data, filelocation)
+
+    def save_sample_data_db(self, json_data):
+        msg = StreamMessage(json_data)
+
+        if msg.get_type() == "tweet":
+            if msg.data['entities']['hashtags'] != []:
+                tweet_details = {"tweetId" : msg.data['id'], "created_at" : msg.data['created_at']}
+                self.db.insert("tweet_details", tweet_details)
+
+                for hashtag in msg.get_hashtags():
+                    tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
+                    self.db.insert("tweet_hashtags", tweet_hashtags)
+
+                self.db.commit()
 
     def save_twitter_filter_data(self, json_data):
         time_folder = int(time.time() / 300) * 300
