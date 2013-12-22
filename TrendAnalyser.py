@@ -91,6 +91,26 @@ class TrendAnalyser:
 
         return combined_terms
 
+    def _get_latest_trends(self):
+        woeids = self.db.select("trend_top_list", "distinct(woeid)")
+        latest_trends = {}
+        for row in woeids:
+            trend_details = self.db.select("trend_top_list", "*",
+                                           "WHERE woeid = '" + str(row['woeid']) + "' " +
+                                           "order by trend_top_list_id desc limit 1")
+            trend_details = trend_details[0]
+
+            trends = self.db.select("trend_top_list_trends",
+                                    "*", "WHERE trend_top_list_id = '" + str(trend_details['trend_top_list_id']) + "'" );
+
+            trend_details['trends'] = []
+            for trend in trends:
+                trend_details['trends'].append(trend)
+
+            latest_trends[row['woeid']] = trend_details
+
+        return latest_trends
+
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
         response_json = json.loads(response.text)[0]
