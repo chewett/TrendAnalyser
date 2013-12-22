@@ -113,9 +113,10 @@ class TrendAnalyser:
 
     def _get_trending_details(self, search_term):
         details = self.db.select("trend_top_list l left join trend_top_list_trends t on t.trend_top_list_id = l.trend_top_list_id",
-                                 "l.*, t.name, t.events, t.promoted_content",
+                                 "l.*, t.events, t.promoted_content",
                                  "WHERE name = '"+ search_term+"'")
-        return details
+        search_details = {'trends' : details, 'search_term' : search_term}
+        return search_details
 
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
