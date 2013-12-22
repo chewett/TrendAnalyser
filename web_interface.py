@@ -12,6 +12,10 @@ TA = TrendAnalyser()
 def filters_json():
     return {"res" : TA._get_filter_keywords()}
 
+@route("/trends.json")
+def trends_json():
+    return {"res" : TA._get_latest_trends()}
+
 @route("/<filename>")
 def static_resource(filename):
     return static_file("/static/"+filename, root=PATH)
