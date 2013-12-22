@@ -1,6 +1,6 @@
 import json
 
-class TrendAnalyser:
+class StreamMessage:
 
     def __init__(self, tweet_data):
         self.data = json.loads(tweet_data)
