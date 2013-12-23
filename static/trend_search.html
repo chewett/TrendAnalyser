@@ -9,7 +9,7 @@
             $.getJSON("trend_search.json/" + term, function(data) {
                 res = data.res;
                 $("#trendTermName").html(res.search_term);
-                $("#trends").html();
+                $("#trends").html("");
                 for (i in res.trends) {
                     trendDetails = res.trends[i];
                     $("#trends").append(
