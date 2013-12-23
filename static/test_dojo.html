@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Dojo tweet representation test</title>
+	</head>
+	<body>
+		<h1>Dojo tweet representation test</h1>
+		
+		<div id="chartNode" style="width: 550px; height: 550px;"></div>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
+		<script>
+
+var chartData = [{x: 10, y: 10}, {x: 11, y: 11} , {x: 15, y: 14}];
+
+			require([
+				 // Require the basic 2d chart resource
+				"dojox/charting/Chart",
+				// Require the theme of our choosing
+				"dojox/charting/themes/Claro",
+
+				// Charting plugins: 
+				// 	Require the Pie type of Plot 
+				"dojox/charting/plot2d/Lines",
+                //plot markers
+                "dojox/charting/plot2d/Markers",
+                //default x/y axes
+                "dojox/charting/axis2d/Default",
+				// Wait until the DOM is ready
+				"dojo/domReady!"
+			], function(Chart, theme, PiePlot){
+
+				// Create the chart within it's "holding" node
+                var chart = new Chart("chartNode");
+
+                // Set the theme
+                chart.setTheme(theme);
+
+                // Add the only/default plot
+                chart.addPlot("default", {
+                    type: "Lines",
+                    markers: true
+                });
+
+                // Add axes
+                chart.addAxis("x");
+                chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
+
+                chart.addSeries("Tweet Data",chartData);
+
+                // Render the chart!
+                chart.render();
+
+			});
+		</script>
+	</body>
+</html>
