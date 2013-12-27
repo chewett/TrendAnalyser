@@ -4,6 +4,8 @@ import time
 import errno
 import md5
 import uuid
+from dateutil import parser
+import calendar
 
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
@@ -144,6 +146,22 @@ class TrendAnalyser:
                                  "WHERE hashtag = '"+ search_term +"'");
         search_details = {'hashtags' : details, 'hashtag' : search_term}
         return search_details
+
+    def _get_hashtag_frequency(self, search_term):
+        details = self._get_hashtag_details(search_term)
+        tweet_spikes = {}
+        for hashtag in details['hashtags']:
+            created_at = calendar.timegm(parser.parse(hashtag['created_at']).utctimetuple())
+            if created_at in tweet_spikes:
+                tweet_spikes[created_at] += 1
+            else:
+                tweet_spikes[created_at] = 1
+
+        data = []
+        for spike in tweet_spikes:
+            data.append({"x": spike, "y": tweet_spikes[spike]})
+
+        return {'res' : data}
 
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
