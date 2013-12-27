@@ -161,7 +161,7 @@ class TrendAnalyser:
         for spike in tweet_spikes:
             data.append({"x": spike, "y": tweet_spikes[spike]})
 
-        return {'res' : data}
+        return data
 
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
