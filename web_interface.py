@@ -12,6 +12,10 @@ TA = TrendAnalyser()
 def hashtags_search_json(term):
     return {"res" : TA._get_hashtag_details(term)}
 
+@route("/hashtag_frequency.json/<term>")
+def hashtag_frequency_json(term):
+    return {"res" : TA._get_hashtag_frequency(term)}
+
 @route("/filters.json")
 def filters_json():
     return {"res" : TA._get_filter_keywords()}
