@@ -10,9 +10,14 @@
 		<div id="chartNode" style="width: 550px; height: 550px;"></div>
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
-		<script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>
 
+$.getJSON("hashtag_frequency.json/Android", function(data) {
+
+alert(data);
 var chartData = [{x: 10, y: 10}, {x: 11, y: 11} , {x: 15, y: 14}];
+chartData = data.res;
 
 			require([
 				 // Require the basic 2d chart resource
@@ -53,6 +58,7 @@ var chartData = [{x: 10, y: 10}, {x: 11, y: 11} , {x: 15, y: 14}];
                 chart.render();
 
 			});
+            });
 		</script>
 	</body>
 </html>
