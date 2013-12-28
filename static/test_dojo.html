@@ -15,9 +15,7 @@
 
 $.getJSON("hashtag_frequency.json/Android", function(data) {
 
-alert(data);
-var chartData = [{x: 10, y: 10}, {x: 11, y: 11} , {x: 15, y: 14}];
-chartData = data.res;
+var chartData = data.res;
 
 			require([
 				 // Require the basic 2d chart resource
