@@ -159,6 +159,12 @@ class TrendAnalyser:
             else:
                 tweet_spikes[created_at / time_period] = 1
 
+        largest_value = max(tweet_spikes.keys())
+        smallest_value = min(tweet_spikes.keys())
+        for i in xrange(largest_value - smallest_value):
+            if not smallest_value + i in tweet_spikes:
+                tweet_spikes[smallest_value + i] = 0
+
         data = []
         for spike in tweet_spikes:
             data.append({"x": int(spike), "y": tweet_spikes[spike]})
