@@ -60,7 +60,7 @@ class TrendAnalyser:
                 tweet_details = {"tweetId" : msg.data['id'], "created_at" : msg.data['created_at']}
                 try:
                     self.db.insert("tweet_details", tweet_details)
-                except _mysql_expcetions.IntegrityError as e:
+                except _mysql_exceptions.IntegrityError as e:
                     if e[0] == 1062: #Duplicate error, ignore as twitter has resent the hashtag id
                         return
                     else:
