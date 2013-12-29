@@ -58,7 +58,13 @@ class TrendAnalyser:
         if msg.get_type() == "tweet":
             if msg.data['entities']['hashtags'] != []:
                 tweet_details = {"tweetId" : msg.data['id'], "created_at" : msg.data['created_at']}
-                self.db.insert("tweet_details", tweet_details)
+                try:
+                    self.db.insert("tweet_details", tweet_details)
+                except _mysql_expcetions.IntegrityError as e:
+                    if e[0] == 1062: #Duplicate error, ignore as twitter has resent the hashtag id
+                        return
+                    else:
+                        raise
 
                 for hashtag in msg.get_hashtags():
                     tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
