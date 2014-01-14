@@ -7,7 +7,7 @@ from TrendAnalyser import TrendAnalyser
 app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
-debug = True
+debug = True #defines if it recompiles the HTML every single time
 
 
 @route("/hashtags.json/<term>")
