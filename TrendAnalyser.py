@@ -154,12 +154,15 @@ class TrendAnalyser:
         return search_details
 
     def _get_hashtag_frequency(self, search_term):
-        time_period = 600
+        time_period = 6000
 
         details = self._get_hashtag_details(search_term)
         tweet_spikes = {}
         for hashtag in details['hashtags']:
+            if hashtag['created_at'] is None:
+                continue
             created_at = calendar.timegm(parser.parse(hashtag['created_at']).utctimetuple())
+
             if created_at / time_period in tweet_spikes:
                 tweet_spikes[created_at / time_period] += 1
             else:
