@@ -7,6 +7,8 @@ from TrendAnalyser import TrendAnalyser
 app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
+debug = True
+
 
 @route("/hashtags.json/<term>")
 def hashtags_search_json(term):
@@ -29,8 +31,30 @@ def trends_search_json(term):
     return {"res" : TA._get_trending_details(term)}
 
 @route("/<filename>")
-def static_resource(filename):
-    return static_file("/static/"+filename, root=PATH)
+def compile_file(filename):
+    if not os.path.isdir(os.path.join(PATH, "compiled")):
+        os.mkdir(os.path.join(PATH, "compiled"))
+
+    if debug == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
+        return static_file("/compiled" + filename, root=PATH)
+    else:
+        compiled = open(os.path.join(PATH, "compiled", filename), "w")
+
+        template = open(os.path.join(PATH, "static", "inc", "header.html"), "r")
+        compiled.write(template.read())
+        template.close()
+
+        template = open(os.path.join(PATH, "static", filename), "r")
+        compiled.write(template.read())
+        template.close()
+
+        template = open(os.path.join(PATH, "static", "inc", "footer.html"), "r")
+        compiled.write(template.read())
+        template.close()
+
+        compiled.close()
+
+    return static_file("/compiled/" + filename, root=PATH)
 
 @route("/")
 def index_page():
