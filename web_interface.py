@@ -30,10 +30,17 @@ def trends_json():
 def trends_search_json(term):
     return {"res" : TA._get_trending_details(term)}
 
+@route("/css/<filename>")
+def css(filename):
+    return static_file("/static/css/" + filename, root=PATH)
+
 @route("/<filename>")
 def compile_file(filename):
     if not os.path.isdir(os.path.join(PATH, "compiled")):
         os.mkdir(os.path.join(PATH, "compiled"))
+
+    if not os.path.isfile(os.path.join(PATH, "static", filename)):
+        return static_file("/static/"+ filename, root=PATH)
 
     if debug == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
         return static_file("/compiled" + filename, root=PATH)
