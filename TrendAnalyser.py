@@ -215,3 +215,21 @@ class TrendAnalyser:
                 raise
 
         json.dump(json_data, open(location, 'w'))
+
+    def _update_woeid_data(self):
+        response = self.api.request("trends/available")
+        response_json = json.loads(response.text)
+
+        for res in response_json:
+            data = {"woeid" : res['woeid'],
+                    "country" : res['country'],
+                    "countryCode" : res['countryCode'],
+                    "name" : res['name'],
+                    "parentWoeid" : res['parentid'],
+                    "placeCode" : res['placeType']['code'],
+                    "placeName" : res['placeType']['name'],
+                    "url" : res['url']}
+            self.db.delete("woeid_data", "WHERE woeid = " + str(data['woeid']))
+            self.db.insert("woeid_data", data)
+
+        self.db.commit()
