@@ -34,8 +34,9 @@ def trends_search_json(term):
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
 
+@route("/")
 @route("/<filename>")
-def compile_file(filename):
+def compile_file(filename="index.html"):
     if not os.path.isdir(os.path.join(PATH, "compiled")):
         os.mkdir(os.path.join(PATH, "compiled"))
 
@@ -63,6 +64,3 @@ def compile_file(filename):
 
     return static_file("/compiled/" + filename, root=PATH)
 
-@route("/")
-def index_page():
-    return "Index page is working"
