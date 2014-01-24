@@ -16,6 +16,11 @@ h2 {
     font-weight: bold;
     border-bottom: 2px solid blue;
     margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+#header > * {
+    vertical-align: middle;
 }
 
 #header a {
