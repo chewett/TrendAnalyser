@@ -9,4 +9,12 @@ h1 {
 
 #navigation {
     border-bottom: 1px solid black;
+    text-align: center;
 }
+
+#navigation a {
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
