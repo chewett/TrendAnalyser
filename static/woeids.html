@@ -1,0 +1,41 @@
+<script>
+    $.getJSON("woeid_data.json", function(data) {
+        res = data.res;
+        $("#trendLocations").html();
+        for (i in res) {
+            woeid = res[i];
+
+            $("#trendLocations").append("<tr><td>" + woeid.woeid + "</td><td>" +
+            woeid.country + "</td><td>" +
+            woeid.countryCode + "</td><td>" +
+            woeid.name + "</td><td>" +
+            woeid.parentWoeid + "</td><td>" +
+            woeid.placeCode + "</td><td>" +
+            woeid.placeName + "</td><td>" +
+            woeid.url + "</td>" +
+            "</tr>");
+        }
+    });
+</script>
+
+<h1>Twitter Trend Analyser - Trend Locations</h1>
+
+These are the locations that Twitter produces trend lists for.
+
+<table>
+    <thead>
+        <tr><th>woeid</th>
+            <th>Country</th>
+            <th>Country Code</th>
+            <th>name</th>
+            <th>Parent Woeid</th>
+            <th>Place Type Code</th>
+            <th>Place Type Name</th>
+            <th>url</th>
+        </tr>
+    </thead>
+
+    <tbody id="trendLocations">
+    </tbody>
+</table>
+
