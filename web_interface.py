@@ -34,6 +34,10 @@ def trends_search_json(term):
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
 
+@route("/images/<filename>")
+def images(filename):
+    return static_file("/static/images/" + filename, root=PATH)
+
 @route("/")
 @route("/<filename>")
 def compile_file(filename="index.html"):
