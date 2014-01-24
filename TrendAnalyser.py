@@ -233,3 +233,8 @@ class TrendAnalyser:
             self.db.insert("woeid_data", data)
 
         self.db.commit()
+
+    def _get_woeid_data(self):
+        details = self.db.select("woeid_data", "*")
+
+        return details

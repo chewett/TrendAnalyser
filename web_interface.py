@@ -30,6 +30,10 @@ def trends_json():
 def trends_search_json(term):
     return {"res" : TA._get_trending_details(term)}
 
+@route("/woeid_data.json")
+def woeid_data_json():
+    return {"res" : TA._get_woeid_data()}
+
 @route("/css/<filename>")
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
