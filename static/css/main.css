@@ -3,9 +3,16 @@ body {
     font-family: sans-serif;
 }
 
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.25em;
+}
 
 #header {
-    font-size: 30px;
+    font-size: 2em;
     font-weight: bold;
     border-bottom: 2px solid blue;
     margin-bottom: 10px;
