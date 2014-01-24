@@ -1,37 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Recent Trends</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-        function searchTrend() {
-            term = $("#trendTerm").val()
-            $.getJSON("trend_search.json/" + term, function(data) {
-                res = data.res;
-                $("#trendTermName").html(res.search_term);
-                $("#trends").html("");
-                for (i in res.trends) {
-                    trendDetails = res.trends[i];
-                    $("#trends").append(
-                        "<tr><td>" + trendDetails.as_of + "</td><td>" +
-                        trendDetails.created_at + "</td><td>" +
-                        trendDetails.woeid + "</td><td>" +
-                        trendDetails.promoted_content + "</td><td>" +
-                        trendDetails.events + "</td><tr>"
-                    );
-                }
-            });
-        }
-    </script>
-</head>
+<script>
+    function searchTrend() {
+        term = $("#trendTerm").val()
+        $.getJSON("trend_search.json/" + term, function(data) {
+            res = data.res;
+            $("#trendTermName").html(res.search_term);
+            $("#trends").html("");
+            for (i in res.trends) {
+                trendDetails = res.trends[i];
+                $("#trends").append(
+                    "<tr><td>" + trendDetails.as_of + "</td><td>" +
+                    trendDetails.created_at + "</td><td>" +
+                    trendDetails.woeid + "</td><td>" +
+                    trendDetails.promoted_content + "</td><td>" +
+                    trendDetails.events + "</td><tr>"
+                );
+            }
+        });
+    }
+</script>
 
-<body>
-
-<div>
 <h1>Twitter Trend Analyser - Recent Trends</h1>
-</div>
 
-<div>
 Search for information about past trends entering the trending data lists.
 
 <input type="text" id="trendTerm" /><button onClick="searchTrend();">Search</button><p>
@@ -39,17 +28,11 @@ Search for information about past trends entering the trending data lists.
 
 Trending Information about the term <span id="trendTermName">None Selected</span>
 <table>
-    <thead>
-        <tr><th>As of</th><th>Created at</th><th>woeid</th><th>Promoted Content</th><th>events</th></tr>
-    </thead>
+<thead>
+    <tr><th>As of</th><th>Created at</th><th>woeid</th><th>Promoted Content</th><th>events</th></tr>
+</thead>
 
-    <tbody id="trends">
-    </tbody>
+<tbody id="trends">
+</tbody>
 </table>
 
-
-</div>
-
-
-</body>
-</html>

@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Recent Trends</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-        $.getJSON("trends.json", function(data) {
-            res = data.res;
-            $("#filter_terms").html();
-            for (i in res) {
-                trend_details = res[i];
-                for (x in trend_details.trends) {
-                    trend = trend_details.trends[x];
-                    $("#trends").append("<tr><td>" + trend_details.woeid + "</td><td>" +
-                    trend_details.created_at + "</td><td>" +
-                    trend_details.as_of + "</td><td>" +
-                    trend.name + "</td>" +
-                    "</tr>");
-                }
+<script>
+    $.getJSON("trends.json", function(data) {
+        res = data.res;
+        $("#filter_terms").html();
+        for (i in res) {
+            trend_details = res[i];
+            for (x in trend_details.trends) {
+                trend = trend_details.trends[x];
+                $("#trends").append("<tr><td>" + trend_details.woeid + "</td><td>" +
+                trend_details.created_at + "</td><td>" +
+                trend_details.as_of + "</td><td>" +
+                trend.name + "</td>" +
+                "</tr>");
             }
-        });
-    </script>
-</head>
+        }
+    });
+</script>
 
-<body>
-
-<div>
 <h1>Twitter Trend Analyser - Recent Trends</h1>
-</div>
 
-<div>
 These terms are currently being searched for and downloaded by the streaming API.
 
 <table>
@@ -39,10 +28,3 @@ These terms are currently being searched for and downloaded by the streaming API
     <tbody id="trends">
     </tbody>
 </table>
-
-
-</div>
-
-
-</body>
-</html>
