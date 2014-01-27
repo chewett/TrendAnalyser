@@ -5,11 +5,11 @@
         for (i in res) {
             woeid = res[i];
 
-            $("#trendLocations").append("<tr><td>" + woeid.woeid + "</td><td>" +
+            $("#trendLocations").append("<tr><td id='woeid_" + woeid.woeid + "'>" + woeid.woeid + "</td><td>" +
             woeid.country + "</td><td>" +
             woeid.countryCode + "</td><td>" +
             woeid.name + "</td><td>" +
-            woeid.parentWoeid + "</td><td>" +
+            "<a href='#woeid_" + woeid.parentWoeid + "'>" + woeid.parentWoeid + "</a></td><td>" +
             woeid.placeCode + "</td><td>" +
             woeid.placeName + "</td><td>" +
             woeid.url + "</td>" +
