@@ -159,7 +159,7 @@ class TrendAnalyser:
         return search_details
 
     def _get_hashtag_frequency(self, search_term):
-        time_period = 15000
+        time_period = 86400# seconds in a day
 
         details = self._get_hashtag_details(search_term)
         tweet_spikes = {}
