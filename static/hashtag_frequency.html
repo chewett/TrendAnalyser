@@ -1,4 +1,9 @@
 <script>
+
+function dayToMeaning(day) {
+    return day % 365;
+}
+
     function searchHashtag() {
         term = $("#hashtagTerm").val();
 
@@ -9,6 +14,12 @@
             if(chartData.length === 0) {
                 $("#chartNode").html("No points in the database");
             }else{
+                var xAxis = [];
+                for(x in chartData) {
+                    day = dayToMeaning(chartData[x].x);
+                    xAxis[x] = {value: chartData[x].x, text: "Day: " + day};
+                }
+
                 require([
                      // Require the basic 2d chart resource
                     "dojox/charting/Chart",
@@ -39,7 +50,9 @@
                     });
 
                     // Add axes
-                    chart.addAxis("x");
+                    chart.addAxis("x", {
+                        labels: xAxis
+                    });
                     chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
                     chart.addSeries("Tweet Data",chartData);
 
