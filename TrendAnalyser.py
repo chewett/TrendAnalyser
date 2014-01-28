@@ -14,11 +14,16 @@ import _mysql_exceptions
 
 class TrendAnalyser:
 
-    def __init__(self, config_location="conf.json", load_api=True):
+    def __init__(self, config_location="conf.json", load_api=True, load_db=True):
         self.load_conf(config_location)
+        if load_db:
+            self.connect_to_db()
+
         if load_api:
             self.load_api()
 
+
+    def connect_to_db(self):
         self.db = WookieDb(self.conf['database_host'],
                            self.conf['database_username'],
                            self.conf['database_password'],
