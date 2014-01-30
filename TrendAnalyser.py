@@ -146,9 +146,10 @@ class TrendAnalyser:
         return latest_trends
 
     def _get_trending_details(self, search_term):
-        details = self.db.select("trend_top_list l left join trend_top_list_trends t on t.trend_top_list_id = l.trend_top_list_id",
-                                 "l.*, t.events, t.promoted_content",
-                                 "WHERE name = '"+ search_term+"'")
+        details = self.db.select("trend_top_list l left join trend_top_list_trends t on t.trend_top_list_id = l.trend_top_list_id " +
+                                 "left join woeid_data w on l.woeid = w.woeid",
+                                 "l.*, t.events, t.promoted_content, w.name as woeid_name",
+                                 "WHERE t.name = '"+ search_term+"'")
         search_details = {'trends' : details, 'search_term' : search_term}
         return search_details
 
