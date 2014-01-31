@@ -3,7 +3,7 @@
 
 while true; do
     $1
-    sleep 60
+    sleep 1
 done
 
 
