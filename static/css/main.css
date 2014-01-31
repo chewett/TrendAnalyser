@@ -38,3 +38,13 @@ h2 {
     padding-right: 10px;
 }
 
+#debug {
+    
+    padding: 10px;
+    border: 2px solid red;
+    margin: 10px;
+    
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}

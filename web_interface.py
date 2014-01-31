@@ -7,7 +7,6 @@ from TrendAnalyser import TrendAnalyser
 app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
-debug = True #defines if it recompiles the HTML every single time
 
 
 @route("/hashtags.json/<term>")
@@ -51,7 +50,7 @@ def compile_file(filename="index.html"):
     if not os.path.isfile(os.path.join(PATH, "static", filename)):
         return static_file("/static/"+ filename, root=PATH)
 
-    if debug == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
+    if TA.conf['debug'] == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
         return static_file("/compiled" + filename, root=PATH)
     else:
         compiled = open(os.path.join(PATH, "compiled", filename), "w")
@@ -59,6 +58,12 @@ def compile_file(filename="index.html"):
         template = open(os.path.join(PATH, "static", "inc", "header.html"), "r")
         compiled.write(template.read())
         template.close()
+
+        if TA.conf['debug'] == True:
+            template = open(os.path.join(PATH, "static", "inc", "debug.html"), "r")
+            compiled.write(template.read())
+            template.close()
+
 
         template = open(os.path.join(PATH, "static", filename), "r")
         compiled.write(template.read())
