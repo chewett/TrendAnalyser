@@ -4,5 +4,6 @@
     "database_host" : "localhost",
     "database_username" : "trendanalyser",
     "database_password" : "",
-    "database_schema" : "trendanalyser"
+    "database_schema" : "trendanalyser",
+    "debug" : false
 }
