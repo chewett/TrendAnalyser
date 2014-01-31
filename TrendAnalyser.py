@@ -168,7 +168,7 @@ class TrendAnalyser:
         for hashtag in details['hashtags']:
             if hashtag['created_at'] is None:
                 continue
-            created_at = calendar.timegm(parser.parse(hashtag['created_at']).utctimetuple())
+            created_at = hashtag['created_at']
 
             if created_at / time_period in tweet_spikes:
                 tweet_spikes[created_at / time_period] += 1
