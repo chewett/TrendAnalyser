@@ -8,6 +8,7 @@ function dayToMeaning(day) {
         term = $("#hashtagTerm").val();
 
         $("#chartNode").html("Loading Graph");
+        $("#hashtagName").html(term);
         $.getJSON("hashtag_frequency.json/" + term, function(data) {
             var chartData = data.res;
             $("#chartNode").html("");
