@@ -251,3 +251,13 @@ class TrendAnalyser:
         details = self.db.select("woeid_data", "*")
 
         return details
+
+    def _get_words_positive(self):
+        details = self.db.select("words_positive", "*")
+
+        return details
+
+    def _get_words_negative(self):
+        details = self.db.select("words_negative", "*")
+
+        return details
