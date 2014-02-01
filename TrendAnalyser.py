@@ -66,7 +66,7 @@ class TrendAnalyser:
         if msg.get_type() == "tweet":
             if msg.data['entities']['hashtags'] != []:
                 tweet_details = {"tweetId" : msg.data['id'],
-                                 "created_at" : calendar.timegm(parser.parse(msg.data['created_at']).utctimetuple())}
+                                 "created_at" : self._convert_to_unix(msg.data['created_at'])}
                 try:
                     self.db.insert("tweet_details", tweet_details)
                 except _mysql_exceptions.IntegrityError as e:
