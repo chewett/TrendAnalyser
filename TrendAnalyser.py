@@ -199,6 +199,9 @@ class TrendAnalyser:
 
         return data
 
+    def _get_trending_woeids_downloading(self):
+        return self.db.select("woeids_download", "*");
+
     def download_trends(self):
         woeids = self.db.select("woeids_download", "*")
         for woeid in woeids:
