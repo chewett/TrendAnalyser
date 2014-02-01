@@ -7,8 +7,8 @@
             for (x in trend_details.trends) {
                 trend = trend_details.trends[x];
                 $("#trends").append("<tr><td>" + trend_details.woeid + "</td><td>" +
-                trend_details.created_at + "</td><td>" +
-                trend_details.as_of + "</td><td>" +
+                getTime(trend_details.created_at) + "</td><td>" +
+                getTime(trend_details.as_of) + "</td><td>" +
                 trend.name + "</td>" +
                 "</tr>");
             }
