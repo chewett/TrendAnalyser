@@ -1,3 +1,6 @@
 conf.json
 compiled/*
 WookieDb.py
+install_scripts/negative-words.txt
+install_scripts/positive-words.txt
+install_scripts/opinion-lexicon-English.rar
