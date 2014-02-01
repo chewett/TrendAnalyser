@@ -1,0 +1,22 @@
+
+
+Installing Wordlists
+====================
+
+Any words you want can be added to the wordlists that are used in the semantic
+analysis stage. Adding them to the database can be done manually or you can
+use some wordlists from the internet.
+
+I have included a script to process and install a wordlist that has been made
+[available](http://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html).
+
+If you wish to use this dataset you should cite one of the following two papers:
+
+   Minqing Hu and Bing Liu. "Mining and Summarizing Customer Reviews."
+       Proceedings of the ACM SIGKDD International Conference on Knowledge
+       Discovery and Data Mining (KDD-2004), Aug 22-25, 2004, Seattle,
+       Washington, USA,
+   Bing Liu, Minqing Hu and Junsheng Cheng. "Opinion Observer: Analyzing
+       and Comparing Opinions on the Web." Proceedings of the 14th
+       International World Wide Web conference (WWW-2005), May 10-14,
+       2005, Chiba, Japan.
