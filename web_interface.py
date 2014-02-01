@@ -33,6 +33,14 @@ def trends_search_json(term):
 def woeid_data_json():
     return {"res" : TA._get_woeid_data()}
 
+@route("/words_positive.json")
+def words_positive_json():
+    return {"res" : TA._get_words_positive()}
+
+@route("/words_negative.json")
+def words_negative_json():
+    return {"res" : TA._get_words_negative()}
+
 @route("/css/<filename>")
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
