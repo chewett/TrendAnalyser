@@ -2,10 +2,13 @@
     $.getJSON("words_negative.json", function(data) {
         res = data.res;
         $("#negativeWords").html("");
-        for (i in res) {
-            word = res[i].word;
-
-            $("#negativeWords").append("<tr><td>"+ word +"</td></tr>");
+        if(res.length === 0) {
+            $("#negativeWords").html("<tr><td>No words are in the system!</td></tr>");
+        }else{
+            for (i in res) {
+                word = res[i].word;
+                $("#negativeWords").append("<tr><td>"+ word +"</td></tr>");
+            }
         }
     });
 </script>
