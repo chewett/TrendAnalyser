@@ -59,7 +59,7 @@ def compile_file(filename="index.html"):
         return static_file("/static/"+ filename, root=PATH)
 
     #TODO: Fix this so it properly stores a log of what needs to be regenerated
-    if TA.conf['debug'] == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
+    if false and TA.conf['debug'] == False and os.path.exists(os.path.join(PATH, "compiled", filename + ".html")):
         return static_file("/compiled" + filename, root=PATH)
     else:
         compiled = open(os.path.join(PATH, "compiled", filename), "w")
