@@ -21,6 +21,8 @@ function updateListbox() {
 }
 
 function listboxChange(){
+    term = $("#gatheredDataList").find(':selected').text();
+    searchTerm(term);
 }
 
 function searchButton() {
