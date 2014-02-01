@@ -1,9 +1,9 @@
 
-Installing nesscary prerequsites
-================================
+Installing necessary prerequisites
+==================================
 
 To install all the needed software there is a install_fedora file in install_scripts
-directory. This has ben tested and will install all needed software on fedora 19.
+directory. This has been tested and will install all needed software on fedora 19.
 
 Installing Wordlists
 ====================
