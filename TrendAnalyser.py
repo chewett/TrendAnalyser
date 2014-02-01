@@ -31,7 +31,8 @@ class TrendAnalyser:
                            select_type='dict')
 
     def load_conf(self, config_location):
-        self.conf = json.load(open(config_location))
+        self.conf = {"debug" : False }
+        self.conf.update(json.load(open(config_location)))
 
     def load_api(self):
         details = json.load(open(self.conf['twitter_key_location']))
