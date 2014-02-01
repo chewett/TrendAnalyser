@@ -45,6 +45,10 @@ def words_negative_json():
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
 
+@route("/js/<filename>")
+def css(filename):
+    return static_file("/static/js/" + filename, root=PATH)
+
 @route("/images/<filename>")
 def images(filename):
     return static_file("/static/images/" + filename, root=PATH)
