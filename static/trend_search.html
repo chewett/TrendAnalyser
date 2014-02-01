@@ -12,8 +12,8 @@
                 for (i in res.trends) {
                     trendDetails = res.trends[i];
                     $("#trends").append(
-                        "<tr><td>" + trendDetails.as_of + "</td><td>" +
-                        trendDetails.created_at + "</td><td>" +
+                        "<tr><td>" + getTime(trendDetails.as_of) + "</td><td>" +
+                        getTime(trendDetails.created_at) + "</td><td>" +
                         trendDetails.woeid + "</td><td>" +
                         trendDetails.woeid_name + "</td><td>" +
                         trendDetails.promoted_content + "</td><td>" +
