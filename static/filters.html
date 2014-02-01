@@ -2,8 +2,12 @@
     $.getJSON("filters.json", function(data) {
         res = data.res;
         $("#filter_terms").html("");
-        for (i in res) {
-            $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
+        if(res.length === 0) {
+            $("#filter_terms").html("<tr><td>No filter terms!</td></tr>");
+        }else{
+            for (i in res) {
+                $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
+            }
         }
     });
 </script>
