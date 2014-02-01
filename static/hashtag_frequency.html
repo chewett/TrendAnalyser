@@ -1,13 +1,35 @@
 <script>
 
 var searchedData = {};
+var currentTerm = false;
 
 function dayToMeaning(day) {
     return day % 365;
 }
 
-function searchHashtag() {
+function updateListbox() {
+    $("#gatheredDataList").html("");
+    for(term in searchedData){
+        var select = "";
+
+        if(term === currentTerm) {
+            select = "selected='selected'";
+        }
+
+        $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term+"</option>");
+    }
+}
+
+function listboxChange(){
+}
+
+function searchButton() {
     term = $("#hashtagTerm").val();
+    searchTerm(term);
+}
+
+function searchTerm(term) {
+    currentTerm = term;
 
     $("#chartNode").html("Loading Graph");
     $("#hashtagName").html(term);
@@ -24,6 +46,7 @@ function searchHashtag() {
 }
 
 function renderGraph(chartData) {
+    updateListbox();
     $("#chartNode").html("");
     if(chartData.length === 0) {
         $("#chartNode").html("No points in the database");
@@ -82,11 +105,18 @@ function renderGraph(chartData) {
 <div>
 Search for information about past trends entering the trending data lists.
 
-<input type="text" id="hashtagTerm" /><button onClick="searchHashtag();">Search</button><p>
+<input type="text" id="hashtagTerm" /><button onClick="searchButton();">Search</button><p>
 
 
 Information about the hashtag <span id="hashtagName">None Selected</span>
 
 <div id="chartNode" style="width:500px; height:500px"></div>
+
+<div>
+Data you have already downloaded that may be viewed: <br />
+<select id="gatheredDataList" size="10" onChange="listboxChange()">
+
+</select>
+</div>
 
 </div>
