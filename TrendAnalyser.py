@@ -201,8 +201,8 @@ class TrendAnalyser:
 
         trend_top_list_data = {
             'woeid' : response_json['locations'][0]['woeid'],
-            'as_of' : response_json['as_of'],
-            'created_at' : response_json['created_at']
+            'as_of' : self._convert_to_unix(response_json['as_of']),
+            'created_at' : self._convert_to_unix(response_json['created_at'])
         }
 
         self.db.insert("trend_top_list", trend_top_list_data)
