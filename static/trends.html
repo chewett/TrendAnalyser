@@ -1,7 +1,7 @@
 <script>
     $.getJSON("trends.json", function(data) {
         res = data.res;
-        $("#filter_terms").html();
+        $("#trends").html("");
         for (i in res) {
             trend_details = res[i];
             for (x in trend_details.trends) {
@@ -26,5 +26,6 @@ This is a list of the most current Twitter Trends as defined by Twitter for each
     </thead>
 
     <tbody id="trends">
+        <tr><td>Loading...</td></tr>
     </tbody>
 </table>

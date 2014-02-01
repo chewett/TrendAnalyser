@@ -1,7 +1,7 @@
 <script>
     $.getJSON("filters.json", function(data) {
         res = data.res;
-        $("#filter_terms").html();
+        $("#filter_terms").html("");
         for (i in res) {
             $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
         }
@@ -17,5 +17,6 @@ These terms are currently being searched for and downloaded by the streaming API
     </thead>
 
     <tbody id="filter_terms">
+        <tr><td>Loading...</td></tr>
     </tbody>
 </table>

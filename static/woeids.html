@@ -1,7 +1,7 @@
 <script>
     $.getJSON("woeid_data.json", function(data) {
         res = data.res;
-        $("#trendLocations").html();
+        $("#trendLocations").html("");
         for (i in res) {
             woeid = res[i];
 
@@ -36,6 +36,7 @@ These are the locations that Twitter produces trend lists for.
     </thead>
 
     <tbody id="trendLocations">
+        <tr><td>Loading...</td></tr>
     </tbody>
 </table>
 
