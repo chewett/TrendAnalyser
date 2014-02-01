@@ -199,6 +199,11 @@ class TrendAnalyser:
 
         return data
 
+    def download_trends(self):
+        woeids = self.db.select("woeids_download", "*")
+        for woeid in woeids:
+            self.download_trend_list(woeid['woeid'])
+
     def download_trend_list(self, woeid):
         response = self.api.request("trends/place", {"id" : woeid})
         response_json = json.loads(response.text)[0]
