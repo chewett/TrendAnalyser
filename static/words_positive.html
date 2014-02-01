@@ -1,0 +1,25 @@
+<script>
+    $.getJSON("words_positive.json", function(data) {
+        res = data.res;
+        $("#positiveWords").html();
+        for (i in res) {
+            word = res[i].word;
+
+            $("#positiveWords").append("<tr><td>"+ word +"</td></tr>");
+        }
+    });
+</script>
+
+<h1>Twitter Trend Analyser - Positive Words</h1>
+
+Here is a list of words that are classified as positive by the system.
+
+<table>
+    <thead>
+        <tr><th>Word</th></tr>
+    </thead>
+
+    <tbody id="positiveWords">
+    </tbody>
+</table>
+
