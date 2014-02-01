@@ -41,6 +41,10 @@ def words_positive_json():
 def words_negative_json():
     return {"res" : TA._get_words_negative()}
 
+@route("/trending_woeids_downloading.json")
+def trending_woeids_downloading():
+    return {"res" : TA._get_trending_woeids_downloading()}
+
 @route("/css/<filename>")
 def css(filename):
     return static_file("/static/css/" + filename, root=PATH)
