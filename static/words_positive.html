@@ -1,7 +1,7 @@
 <script>
     $.getJSON("words_positive.json", function(data) {
         res = data.res;
-        $("#positiveWords").html();
+        $("#positiveWords").html("");
         for (i in res) {
             word = res[i].word;
 
@@ -20,6 +20,7 @@ Here is a list of words that are classified as positive by the system.
     </thead>
 
     <tbody id="positiveWords">
+        <tr><td>Loading Words...</td></tr>
     </tbody>
 </table>
 
