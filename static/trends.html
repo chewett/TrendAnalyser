@@ -7,6 +7,7 @@
             for (x in trend_details.trends) {
                 trend = trend_details.trends[x];
                 $("#trends").append("<tr><td>" + trend_details.woeid + "</td><td>" +
+                trend_details.name + "</td><td>" +
                 getTime(trend_details.created_at) + "</td><td>" +
                 getTime(trend_details.as_of) + "</td><td>" +
                 trend.name + "</td>" +
@@ -22,7 +23,7 @@ This is a list of the most current Twitter Trends as defined by Twitter for each
 
 <table>
     <thead>
-        <tr><th>woeid</th><th>Created at</th><th>As of</th><th>Trend Name</th></tr>
+        <tr><th>woeid</th><th>woeid name</th><th>Created at</th><th>As of</th><th>Trend Name</th></tr>
     </thead>
 
     <tbody id="trends">
