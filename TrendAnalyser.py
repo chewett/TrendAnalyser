@@ -220,6 +220,13 @@ class TrendAnalyser:
 
         return data
 
+    def _get_mention_details(self, search_term):
+        details = self.db.select("tweet_mentions m left join tweet_details d on m.tweetId = d.tweetId",
+                                 "m.*",
+                                 "WHERE screen_name = '" + search_term +"'");
+        search_details = {'mentions' : details, 'screen_name' : search_term}
+        return search_details
+
     def _get_trending_woeids_downloading(self):
         return self.db.select("woeids_download d left join woeid_data w on d.woeid = w.woeid", "d.*, w.name");
 
