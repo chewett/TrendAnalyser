@@ -17,6 +17,10 @@ def hashtags_search_json(term):
 def hashtag_frequency_json(term):
     return {"res" : TA._get_hashtag_frequency(term)}
 
+@route("/mentions.json/<term>")
+def mentions_search_json(term):
+    return {"res" : TA._get_mention_details(term)}
+
 @route("/filters.json")
 def filters_json():
     return {"res" : TA._get_filter_keywords()}
