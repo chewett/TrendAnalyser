@@ -28,7 +28,7 @@ class TrendAnalyser:
                            self.conf['database_username'],
                            self.conf['database_password'],
                            self.conf['database_schema'],
-                           select_type='dict')
+                           select_type='dict', charset="utf8")
 
     def load_conf(self, config_location):
         self.conf = {"debug" : False }
