@@ -6,7 +6,8 @@
             $("#woeidData").html("<tr><td>No woeids are being downloaded</td></tr>");
         }else{
             for (i in res) {
-                $("#woeidData").append("<tr><td>" + res[i]["woeid"] + "</td></tr>");
+                $("#woeidData").append("<tr><td>" + res[i]["woeid"] + "</td><td>" +
+                                       res[i]["name"] + "</td></tr>");
             }
         }
     });
@@ -17,7 +18,7 @@ These are the locations that are currently having their offical Twitter trends d
 
 <table>
     <thead>
-        <tr><th>woeids</th></tr>
+        <tr><th>woeids</th><th>Location Name</th></tr>
     </thead>
 
     <tbody id="woeidData">
