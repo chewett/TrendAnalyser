@@ -39,7 +39,7 @@ function searchTerm(term) {
     if(term in searchedData) {
         renderGraph(searchedData[term]);
     }else{
-        $.getJSON("hashtag_frequency.json/" + term, function(data) {
+        $.getJSON("hashtag_frequency.json/" + encodeURIComponent(term), function(data) {
             var chartData = data.res;
             searchedData[term] = chartData;
             renderGraph(chartData);
