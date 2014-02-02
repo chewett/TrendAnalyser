@@ -1,0 +1,26 @@
+<script>
+    $.getJSON("trending_woeids_downloading.json", function(data) {
+        res = data.res;
+        $("#woeidData").html("");
+        if(res.length === 0) {
+            $("#woeidData").html("<tr><td>No woeids are being downloaded</td></tr>");
+        }else{
+            for (i in res) {
+                $("#woeidData").append("<tr><td>" + res[i]["woeid"] + "</td></tr>");
+            }
+        }
+    });
+</script>
+
+<h1>Twitter Trend Analyser - Trending woeids Downloading</h1>
+These are the locations that are currently having their offical Twitter trends downloaded for<p />
+
+<table>
+    <thead>
+        <tr><th>woeids</th></tr>
+    </thead>
+
+    <tbody id="woeidData">
+        <tr><td>Loading...</td></tr>
+    </tbody>
+</table>
