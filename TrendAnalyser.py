@@ -200,7 +200,7 @@ class TrendAnalyser:
         return data
 
     def _get_trending_woeids_downloading(self):
-        return self.db.select("woeids_download", "*");
+        return self.db.select("woeids_download d left join woeid_data w on d.woeid = w.woeid", "d.*, w.name");
 
     def download_trends(self):
         woeids = self.db.select("woeids_download", "*")
