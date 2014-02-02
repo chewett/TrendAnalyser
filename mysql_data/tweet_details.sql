@@ -1,5 +1,9 @@
 CREATE TABLE `tweet_details` (
     `tweetId` bigint(20) NOT NULL,
-    `created_at` int(11) NOT NULL,
-    PRIMARY KEY (`tweetId`)
+    `negative` tinyint(3) unsigned DEFAULT '0',
+    `positive` tinyint(3) unsigned DEFAULT '0',
+    `created_at` int(11) DEFAULT NULL,
+    PRIMARY KEY (`tweetId`),
+    KEY `positive` (`positive` DESC),
+    KEY `negative` (`negative` DESC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
