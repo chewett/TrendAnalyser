@@ -222,7 +222,7 @@ class TrendAnalyser:
 
     def _get_mention_details(self, search_term):
         details = self.db.select("tweet_mentions m left join tweet_details d on m.tweetId = d.tweetId",
-                                 "m.*",
+                                 "d.*",
                                  "WHERE screen_name = '" + search_term +"'");
         search_details = {'mentions' : details, 'screen_name' : search_term}
         return search_details
