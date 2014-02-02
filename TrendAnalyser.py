@@ -227,6 +227,38 @@ class TrendAnalyser:
         search_details = {'mentions' : details, 'screen_name' : search_term}
         return search_details
 
+    def _get_mention_frequency(self, search_term):
+        time_period = 86400# seconds in a day
+
+        details = self._get_mention_details(search_term)
+        tweet_spikes = {}
+        for mention in details['mentions']:
+            if mention['created_at'] is None:
+                continue
+            created_at = mention['created_at']
+
+            if created_at / time_period in tweet_spikes:
+                tweet_spikes[created_at / time_period] += 1
+            else:
+                tweet_spikes[created_at / time_period] = 1
+
+        if not tweet_spikes:
+            return []
+
+        largest_value = max(tweet_spikes.keys())
+        smallest_value = min(tweet_spikes.keys())
+        for i in xrange(largest_value - smallest_value):
+            if not smallest_value + i in tweet_spikes:
+                tweet_spikes[smallest_value + i] = 0
+
+        data = []
+        for spike in tweet_spikes:
+            data.append({"x": int(spike), "y": tweet_spikes[spike]})
+
+        data.sort(key=lambda x : x['x'])
+
+        return data
+
     def _get_trending_woeids_downloading(self):
         return self.db.select("woeids_download d left join woeid_data w on d.woeid = w.woeid", "d.*, w.name");
 
