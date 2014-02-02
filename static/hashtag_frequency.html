@@ -104,7 +104,6 @@ function renderGraph(chartData) {
 </script>
 
 <h2>Hashtag Search</h2>
-<div>
 Notes:<br />
 <ul>
 <li>Hashtags should be entered without the # in front of them</li>
@@ -116,12 +115,15 @@ Search for information about past trends entering the trending data lists.
 
 <input type="text" id="hashtagTerm" /><button onClick="searchButton();">Search</button><p>
 
+<div class="row">
 
+<div class="col-md-8">
 Information about the hashtag <b><span id="hashtagName">None Selected</span></b>
 
 <div id="chartNode" style="width:500px; height:500px"></div>
 
-<div>
+</div>
+<div class="col-md-4">
 Data you have already downloaded that may be viewed: <br />
 <select id="gatheredDataList" size="10" onChange="listboxChange()">
 
