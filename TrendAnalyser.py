@@ -66,7 +66,15 @@ class TrendAnalyser:
 
         if msg.get_type() == "tweet":
             if msg.data['entities']['hashtags'] != []:
+                words = msg.data['text'].split(" ")
+                where_clause = "WHERE word in (\"" + "\",\"".join(words) + "\");"
+
+                positive = self.db.select("words_positive", "count(*)", where_clause)[0]["count(*)"]
+                negative = self.db.select("words_negative", "count(*)", where_clause)[0]["count(*)"]
+
                 tweet_details = {"tweetId" : msg.data['id'],
+                                 "positive" : positive,
+                                 "negative" : negative,
                                  "created_at" : self._convert_to_unix(msg.data['created_at'])}
                 try:
                     self.db.insert("tweet_details", tweet_details)
