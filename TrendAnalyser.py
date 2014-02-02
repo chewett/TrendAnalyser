@@ -65,7 +65,7 @@ class TrendAnalyser:
         msg = StreamMessage(json_data)
 
         if msg.get_type() == "tweet":
-            if msg.data['entities']['hashtags'] != []:
+            if msg.data['entities']['hashtags'] != [] or msg.data['entities']['user_mentions'] != []:
                 words = map(json.dumps, msg.data['text'].split(" "))
                 where_clause = "WHERE word in (" + ",".join(words) + ");"
 
@@ -83,6 +83,19 @@ class TrendAnalyser:
                         return
                     else:
                         raise
+
+                for mention in msg.data['entities']['user_mentions']:
+                    mention_details = {"tweetId": msg.data["id"],
+                                       "user_id": mention["id"],
+                                       "name" : mention["name"],
+                                       "screen_name" : mention["screen_name"]}
+                    try:
+                        self.db.insert("tweet_mentions", mention_details)
+                    except _mysql_exceptions.IntegrityError as e:
+                        if e[0] == 1062: #Duplicate error, ignore it as they ahve put multiple mentions in the message
+                            pass
+                        else:
+                            raise
 
                 for hashtag in msg.get_hashtags():
                     tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
