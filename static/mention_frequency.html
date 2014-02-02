@@ -1,0 +1,128 @@
+<script>
+
+var searchedData = {};
+var currentTerm = false;
+
+function dayToMeaning(day) {
+    return day % 365;
+}
+
+function updateListbox() {
+    $("#gatheredDataList").html("");
+    for(term in searchedData){
+        var select = "";
+
+        if(term === currentTerm) {
+            select = "selected='selected'";
+        }
+
+        $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term+"</option>");
+    }
+}
+
+function listboxChange(){
+    term = $("#gatheredDataList").find(':selected').text();
+    searchTerm(term);
+}
+
+function searchButton() {
+    term = $("#mentionTerm").val();
+    searchTerm(term);
+}
+
+function searchTerm(term) {
+    currentTerm = term;
+
+    $("#chartNode").html("Loading Graph");
+    $("#mentionName").html(term);
+
+    if(term in searchedData) {
+        renderGraph(searchedData[term]);
+    }else{
+        $.getJSON("mention_frequency.json/" + encodeURIComponent(term), function(data) {
+            var chartData = data.res;
+            searchedData[term] = chartData;
+            renderGraph(chartData);
+        });
+    }
+}
+
+function renderGraph(chartData) {
+    updateListbox();
+    $("#chartNode").html("");
+    if(chartData.length === 0) {
+        $("#chartNode").html("No points in the database");
+    }else{
+        var xAxis = [];
+        for(x in chartData) {
+            day = dayToMeaning(chartData[x].x);
+            xAxis[x] = {value: chartData[x].x, text: "Day: " + day};
+        }
+
+        require([
+             // Require the basic 2d chart resource
+            "dojox/charting/Chart",
+            // Require the theme of our choosing
+            "dojox/charting/themes/Claro",
+
+            // Charting plugins: 
+            // 	Require the Pie type of Plot 
+            "dojox/charting/plot2d/Lines",
+            //plot markers
+            "dojox/charting/plot2d/Markers",
+            //default x/y axes
+            "dojox/charting/axis2d/Default",
+            // Wait until the DOM is ready
+            "dojo/domReady!"
+        ], function(Chart, theme, PiePlot){
+
+            // Create the chart within it's "holding" node
+            var chart = new Chart("chartNode");
+
+            // Set the theme
+            chart.setTheme(theme);
+
+            // Add the only/default plot
+            chart.addPlot("default", {
+                type: "Lines",
+                markers: true
+            });
+
+            // Add axes
+            chart.addAxis("x", {
+                labels: xAxis
+            });
+            chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
+            chart.addSeries("Tweet Data",chartData);
+
+            // Render the chart!
+            chart.render();
+        });
+    }
+
+}
+</script>
+
+<h2>Mention Search</h2>
+<p />
+
+Search for information about past mentions.
+
+<input type="text" id="mentionTerm" /><button onClick="searchButton();">Search</button><p>
+
+<div class="row">
+
+<div class="col-md-8">
+Information about the mention <b><span id="mentionName">None Selected</span></b>
+
+<div id="chartNode" style="width:500px; height:500px"></div>
+
+</div>
+<div class="col-md-4">
+Data you have already downloaded that may be viewed: <br />
+<select id="gatheredDataList" size="10" onChange="listboxChange()">
+
+</select>
+</div>
+
+</div>
