@@ -19,6 +19,7 @@ import _mysql_exceptions
 from helpers import save_data, convert_to_unix
 
 class TrendAnalyser:
+    '''Holds all connection information with the database and Twitter'''
 
     def __init__(self, config_location="conf.json", load_api=True, load_db=True):
         '''Initialises the TrendAnalyser class object'''

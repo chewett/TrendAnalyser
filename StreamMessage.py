@@ -7,6 +7,7 @@ to identify what type of message it is
 import json
 
 class StreamMessage:
+    '''Holds a json message from Twitter'''
 
     def __init__(self, tweet_data, disconnect_closes=True):
         '''Sets up the StreamMessage object by passing in a json object'''
