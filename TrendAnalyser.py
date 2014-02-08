@@ -20,6 +20,7 @@ class TrendAnalyser:
         self.load_conf(config_location)
         self.api = None
         self.db = None
+        self.conf = None
         
         if load_db:
             self.connect_to_db()
