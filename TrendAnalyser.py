@@ -54,8 +54,8 @@ class TrendAnalyser:
                               details['access_token_key'],
                               details['access_token_secret'])
 
-    def _convert_to_unix(self, time):
-        return calendar.timegm(parser.parse(time).utctimetuple())
+    def _convert_to_unix(self, timestamp):
+        return calendar.timegm(parser.parse(timestamp).utctimetuple())
 
     def save_trend_data(self, json_data, woeid):
         filelocation = os.path.join(self.conf['save_data_location'],
