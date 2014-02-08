@@ -17,6 +17,9 @@ class TrendAnalyser:
     def __init__(self, config_location="conf.json", load_api=True, load_db=True):
         '''Initialises the TrendAnalyser class object'''
         self.load_conf(config_location)
+        self.api = None
+        self.db = None
+        
         if load_db:
             self.connect_to_db()
             self.load_db_conf()
