@@ -23,7 +23,6 @@ class TrendAnalyser:
         if load_api:
             self.load_api()
 
-
     def connect_to_db(self):
         self.db = WookieDb(self.conf['database_host'],
                            self.conf['database_username'],
@@ -131,7 +130,6 @@ class TrendAnalyser:
                                 uuid.uuid4().hex +
                                 ".json")
         self.save_data(json_data, filelocation)
-
 
     def start_stream_filter(self):
         terms = self._get_filter_keywords()
@@ -269,7 +267,6 @@ class TrendAnalyser:
             data.append({"x": int(spike), "y": tweet_spikes[spike]})
 
         data.sort(key=lambda x : x['x'])
-
         return data
 
     def _get_trending_woeids_downloading(self):
@@ -305,7 +302,6 @@ class TrendAnalyser:
         self.db.connection.commit()
 
     def save_data(self, json_data, location):
-
         try:
             os.makedirs(os.path.dirname(location))
         except OSError as e:
@@ -334,17 +330,14 @@ class TrendAnalyser:
 
     def _get_woeid_data(self):
         details = self.db.select("woeid_data", "*")
-
         return details
 
     def _get_words_positive(self):
         details = self.db.select("words_positive", "*")
-
         return details
 
     def _get_words_negative(self):
         details = self.db.select("words_negative", "*")
-
         return details
 
     def set_option(self, key, value):
