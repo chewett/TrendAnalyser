@@ -18,6 +18,7 @@ class TrendAnalyser:
         self.load_conf(config_location)
         if load_db:
             self.connect_to_db()
+            self.load_db_conf()
 
         if load_api:
             self.load_api()
@@ -33,6 +34,17 @@ class TrendAnalyser:
     def load_conf(self, config_location):
         self.conf = {"debug" : False }
         self.conf.update(json.load(open(config_location)))
+
+    def load_db_conf(self):
+        db_options = self.db.select("options", "*");
+        for option in db_options:
+            value = option["value"]
+            if value == "true":
+                value = True
+            elif value == "false":
+                value = False
+
+            self.conf[option['key']] = value
 
     def load_api(self):
         details = json.load(open(self.conf['twitter_key_location']))
