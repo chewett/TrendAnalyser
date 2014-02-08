@@ -99,8 +99,8 @@ class TrendAnalyser:
                                  "created_at" : convert_to_unix(msg.data['created_at'])}
                 try:
                     self.db.insert("tweet_details", tweet_details)
-                except _mysql_exceptions.IntegrityError as e:
-                    if e[0] == 1062: #Duplicate error, ignore as twitter has resent the hashtag id
+                except _mysql_exceptions.IntegrityError as err:
+                    if err[0] == 1062: #Duplicate error, ignore as twitter has resent the hashtag id
                         return
                     else:
                         raise
@@ -112,8 +112,8 @@ class TrendAnalyser:
                                        "screen_name" : mention["screen_name"]}
                     try:
                         self.db.insert("tweet_mentions", mention_details)
-                    except _mysql_exceptions.IntegrityError as e:
-                        if e[0] == 1062: #Duplicate error, ignore it as they ahve put multiple mentions in the message
+                    except _mysql_exceptions.IntegrityError as err:
+                        if err[0] == 1062: #Duplicate error, ignore it as they ahve put multiple mentions in the message
                             pass
                         else:
                             raise
@@ -122,8 +122,8 @@ class TrendAnalyser:
                     tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
                     try:
                         self.db.insert("tweet_hashtags", tweet_hashtags)
-                    except _mysql_exceptions.IntegrityError as e:
-                        if e[0] == 1062: #Duplicate error, ignore it as they have put multiple hashtags in the message
+                    except _mysql_exceptions.IntegrityError as err:
+                        if err[0] == 1062: #Duplicate error, ignore it as they have put multiple hashtags in the message
                             pass
                         else:
                             raise
