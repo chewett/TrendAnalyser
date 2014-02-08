@@ -1,3 +1,8 @@
+'''
+This is the main class that deals with the whole system. It exposes a number
+of methods that can be accessed by the web interface
+'''
+
 import json
 import os
 import time

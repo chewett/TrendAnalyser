@@ -1,3 +1,7 @@
+'''
+This allows you to set database options using the command line
+'''
+
 import sys
 
 from TrendAnalyser import TrendAnalyser

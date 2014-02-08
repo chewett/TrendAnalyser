@@ -1,3 +1,7 @@
+'''
+This file has a number of helpful functions
+'''
+
 import json
 import errno
 from dateutil import parser

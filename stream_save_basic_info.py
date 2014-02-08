@@ -1,3 +1,8 @@
+'''
+This loads up a streaming API and saves the minimum data it needs for the
+system to function to the database.
+'''
+
 from TrendAnalyser import TrendAnalyser
 
 TA = TrendAnalyser()

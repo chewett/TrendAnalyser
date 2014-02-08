@@ -1,3 +1,7 @@
+'''
+This downloads the sample API and stores it to json files
+'''
+
 from TrendAnalyser import TrendAnalyser
 
 TA = TrendAnalyser()

@@ -1,3 +1,7 @@
+'''
+This is the bottle powered web interface for the TrendAnalyser project
+'''
+
 import os
 
 from bottle import Bottle, route, static_file

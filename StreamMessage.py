@@ -1,3 +1,9 @@
+'''
+This class is used to represent and hold a Twitter message. This could be a
+variety of different types and holds the json from this. It can be used
+to identify what type of message it is
+'''
+
 import json
 
 class StreamMessage:
