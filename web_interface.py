@@ -68,6 +68,9 @@ def images(filename):
 @route("/")
 @route("/<filename>")
 def compile_file(filename="index.html"):
+    if TA.conf['offline']:
+        filename = "offline.html"
+    
     if not os.path.isdir(os.path.join(PATH, "compiled")):
         os.mkdir(os.path.join(PATH, "compiled"))
 
