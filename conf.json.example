@@ -1,9 +1,6 @@
 {
-    "twitter_key_location": "/home/chewett/Documents/twitter.json",
-    "save_data_location" : "/home/chewett/Documents/tweet_data/",
     "database_host" : "localhost",
     "database_username" : "trendanalyser",
     "database_password" : "",
-    "database_schema" : "trendanalyser",
-    "debug" : false
+    "database_schema" : "trendanalyser"
 }
