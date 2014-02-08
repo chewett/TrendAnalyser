@@ -347,8 +347,9 @@ class TrendAnalyser:
         return details
 
     def set_option(self, key, value):
-        existing = self.db.select("options", "*", "WHERE key = '" + key + "' LIMIT 1;")
+        existing = self.db.select("options", "*", " WHERE options.key = '" + key + "' LIMIT 1;")
         if existing:
-            self.db.update("options", {"value" : value}, "WHERE key = '" + key + "' LIMIT 1;")
+            self.db.update("options", {"value" : value}, "WHERE options.key = '" + key + "' LIMIT 1;")
         else:
-            self.db.insert("options", {"key" : key, "value" : value})
+            self.db.insert("options", {"options.key" : key, "value" : value})
+        self.db.commit()
