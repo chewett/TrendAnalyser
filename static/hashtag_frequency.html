@@ -37,27 +37,29 @@ function searchTerm(term) {
     $("#hashtagName").html(term);
 
     if(term in searchedData) {
-        renderGraph(searchedData[term]);
+        renderGraph([term]);
     }else{
         $.getJSON("hashtag_frequency.json/" + encodeURIComponent(term), function(data) {
             var chartData = data.res;
             searchedData[term] = chartData;
-            renderGraph(chartData);
+            renderGraph([term]);
         });
     }
 }
 
-function renderGraph(chartData) {
+function renderGraph(terms) {
     updateListbox();
     $("#chartNode").html("");
-    if(chartData.length === 0) {
+    
+    if(false && chartData.length === 0) {
         $("#chartNode").html("No points in the database");
     }else{
-        var xAxis = [];
-        for(x in chartData) {
-            day = dayToMeaning(chartData[x].x);
-            xAxis[x] = {value: chartData[x].x, text: "Day: " + day};
-        }
+        //TODO: reimplement this based on the new way of doing it
+        //var xAxis = [];
+        //for(x in chartData) {
+        //    day = dayToMeaning(chartData[x].x);
+        //    xAxis[x] = {value: chartData[x].x, text: "Day: " + day};
+        //}
 
         require([
              // Require the basic 2d chart resource
@@ -90,10 +92,13 @@ function renderGraph(chartData) {
 
             // Add axes
             chart.addAxis("x", {
-                labels: xAxis
+            //    labels: xAxis
             });
             chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
-            chart.addSeries("Tweet Data",chartData);
+
+            for(i in terms) {
+                chart.addSeries(terms[i], searchedData[terms[i]]);
+            }
 
             // Render the chart!
             chart.render();
