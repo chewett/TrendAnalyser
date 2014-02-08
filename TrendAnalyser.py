@@ -6,11 +6,8 @@ of methods that can be accessed by the web interface
 import json
 import os
 import time
-import errno
 import md5
 import uuid
-from dateutil import parser
-import calendar
 
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
