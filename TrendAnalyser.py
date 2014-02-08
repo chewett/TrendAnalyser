@@ -11,6 +11,7 @@ from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
 from StreamMessage import StreamMessage
 import _mysql_exceptions
+from helpers import save_data, convert_to_unix
 
 class TrendAnalyser:
 
@@ -62,16 +63,12 @@ class TrendAnalyser:
                               details['access_token_key'],
                               details['access_token_secret'])
 
-    def _convert_to_unix(self, timestamp):
-        '''Used to convert any timestamp format to unix time'''
-        return calendar.timegm(parser.parse(timestamp).utctimetuple())
-
     def save_trend_data(self, json_data, woeid):
         '''Saves Twitter Trend data to a json file'''
         filelocation = os.path.join(self.conf['save_data_location'],
                                 "trends/place/weoid_" + str(woeid) + "_" +
                                 str(int(time.time())) + ".json")
-        self.save_data(json_data, filelocation)
+        save_data(json_data, filelocation)
 
     def save_twitter_sample_data(self, json_data):
         '''Saves data from the sample API to json files'''
@@ -82,7 +79,7 @@ class TrendAnalyser:
                                 str(int(time.time())) + "_" +
                                 md5.md5(json.dumps(json_data)).hexdigest() +
                                 ".json")
-        self.save_data(json_data, filelocation)
+        save_data(json_data, filelocation)
 
     def save_sample_data_db(self, json_data):
         '''Saves as little as possible from the sample API to the database'''
@@ -99,7 +96,7 @@ class TrendAnalyser:
                 tweet_details = {"tweetId" : msg.data['id'],
                                  "positive" : positive,
                                  "negative" : negative,
-                                 "created_at" : self._convert_to_unix(msg.data['created_at'])}
+                                 "created_at" : convert_to_unix(msg.data['created_at'])}
                 try:
                     self.db.insert("tweet_details", tweet_details)
                 except _mysql_exceptions.IntegrityError as e:
@@ -142,7 +139,7 @@ class TrendAnalyser:
                                 str(int(time.time())) + "_" +
                                 uuid.uuid4().hex +
                                 ".json")
-        self.save_data(json_data, filelocation)
+        save_data(json_data, filelocation)
 
     def start_stream_filter(self):
         '''Gets the filter terms to search for them starts downloading them'''
@@ -307,8 +304,8 @@ class TrendAnalyser:
 
         trend_top_list_data = {
             'woeid' : response_json['locations'][0]['woeid'],
-            'as_of' : self._convert_to_unix(response_json['as_of']),
-            'created_at' : self._convert_to_unix(response_json['created_at'])
+            'as_of' : convert_to_unix(response_json['as_of']),
+            'created_at' : convert_to_unix(response_json['created_at'])
         }
 
         self.db.insert("trend_top_list", trend_top_list_data)
@@ -324,16 +321,6 @@ class TrendAnalyser:
             self.db.insert("trend_top_list_trends", trend_data)
 
         self.db.connection.commit()
-
-    def save_data(self, json_data, location):
-        '''Saves json data to a specific file location'''
-        try:
-            os.makedirs(os.path.dirname(location))
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-
-        json.dump(json_data, open(location, 'w'))
 
     def _update_woeid_data(self):
         '''Downloads all the avalible woeid data from Twitter and stores it'''
