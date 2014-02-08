@@ -4,48 +4,54 @@
 
 <script>
 
-$.getJSON("hashtag_frequency.json/Sherlock", function(data) {
+$.getJSON("hashtag_frequency.json/Moriarty", function(data) {
+    
+    $.getJSON("hashtag_frequency.json/Watson", function(data2) {
 
-    var chartData = data.res;
 
-    require([
-         // Require the basic 2d chart resource
-        "dojox/charting/Chart",
-        // Require the theme of our choosing
-        "dojox/charting/themes/Claro",
+        var chartData = data.res;
+        var chartData2 = data2.res;
 
-        // Charting plugins: 
-        // 	Require the Pie type of Plot 
-        "dojox/charting/plot2d/Lines",
-        //plot markers
-        "dojox/charting/plot2d/Markers",
-        //default x/y axes
-        "dojox/charting/axis2d/Default",
-        // Wait until the DOM is ready
-        "dojo/domReady!"
-    ], function(Chart, theme, PiePlot){
+        require([
+             // Require the basic 2d chart resource
+            "dojox/charting/Chart",
+            // Require the theme of our choosing
+            "dojox/charting/themes/Claro",
 
-        // Create the chart within it's "holding" node
-        var chart = new Chart("chartNode");
+            // Charting plugins: 
+            // 	Require the Pie type of Plot 
+            "dojox/charting/plot2d/Lines",
+            //plot markers
+            "dojox/charting/plot2d/Markers",
+            //default x/y axes
+            "dojox/charting/axis2d/Default",
+            // Wait until the DOM is ready
+            "dojo/domReady!"
+        ], function(Chart, theme, PiePlot){
 
-        // Set the theme
-        chart.setTheme(theme);
+            // Create the chart within it's "holding" node
+            var chart = new Chart("chartNode");
 
-        // Add the only/default plot
-        chart.addPlot("default", {
-            type: "Lines",
-            markers: true
+            // Set the theme
+            chart.setTheme(theme);
+
+            // Add the only/default plot
+            chart.addPlot("default", {
+                type: "Lines",
+                markers: true
+            });
+
+            // Add axes
+            chart.addAxis("x");
+            chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
+
+            chart.addSeries("Tweet Data",chartData);
+            chart.addSeries("Tweet Data 2", chartData2);
+
+            // Render the chart!
+            chart.render();
+
         });
-
-        // Add axes
-        chart.addAxis("x");
-        chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
-
-        chart.addSeries("Tweet Data",chartData);
-
-        // Render the chart!
-        chart.render();
-
     });
 });
 </script>
