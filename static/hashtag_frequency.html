@@ -70,7 +70,11 @@ function combineRemove() {
 }
 
 function combineGenerate() {
-
+    graphingTerms = [];
+    $("#combinedGraphList").find(":selected").each(function() {
+        graphingTerms.push($(this).text());
+    });
+    renderGraph(graphingTerms);
 }
 
 function renderGraph(terms) {
