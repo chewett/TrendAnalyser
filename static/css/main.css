@@ -11,6 +11,11 @@ h2 {
     font-size: 1.25em;
 }
 
+h3 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
 #header {
     font-size: 2em;
     font-weight: bold;
