@@ -1,62 +1,51 @@
-<!DOCTYPE HTML>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Dojo tweet representation test</title>
-	</head>
-	<body>
-		<h1>Dojo tweet representation test</h1>
-		
-		<div id="chartNode" style="width: 550px; height: 550px;"></div>
-		
-		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.2/dojo/dojo.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>
+<h1>Dojo tweet representation test</h1>
 
-$.getJSON("hashtag_frequency.json/Android", function(data) {
+<div id="chartNode" style="width: 550px; height: 550px;"></div>
 
-var chartData = data.res;
+<script>
 
-			require([
-				 // Require the basic 2d chart resource
-				"dojox/charting/Chart",
-				// Require the theme of our choosing
-				"dojox/charting/themes/Claro",
+$.getJSON("hashtag_frequency.json/Sherlock", function(data) {
 
-				// Charting plugins: 
-				// 	Require the Pie type of Plot 
-				"dojox/charting/plot2d/Lines",
-                //plot markers
-                "dojox/charting/plot2d/Markers",
-                //default x/y axes
-                "dojox/charting/axis2d/Default",
-				// Wait until the DOM is ready
-				"dojo/domReady!"
-			], function(Chart, theme, PiePlot){
+    var chartData = data.res;
 
-				// Create the chart within it's "holding" node
-                var chart = new Chart("chartNode");
+    require([
+         // Require the basic 2d chart resource
+        "dojox/charting/Chart",
+        // Require the theme of our choosing
+        "dojox/charting/themes/Claro",
 
-                // Set the theme
-                chart.setTheme(theme);
+        // Charting plugins: 
+        // 	Require the Pie type of Plot 
+        "dojox/charting/plot2d/Lines",
+        //plot markers
+        "dojox/charting/plot2d/Markers",
+        //default x/y axes
+        "dojox/charting/axis2d/Default",
+        // Wait until the DOM is ready
+        "dojo/domReady!"
+    ], function(Chart, theme, PiePlot){
 
-                // Add the only/default plot
-                chart.addPlot("default", {
-                    type: "Lines",
-                    markers: true
-                });
+        // Create the chart within it's "holding" node
+        var chart = new Chart("chartNode");
 
-                // Add axes
-                chart.addAxis("x");
-                chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
+        // Set the theme
+        chart.setTheme(theme);
 
-                chart.addSeries("Tweet Data",chartData);
+        // Add the only/default plot
+        chart.addPlot("default", {
+            type: "Lines",
+            markers: true
+        });
 
-                // Render the chart!
-                chart.render();
+        // Add axes
+        chart.addAxis("x");
+        chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
 
-			});
-            });
-		</script>
-	</body>
-</html>
+        chart.addSeries("Tweet Data",chartData);
+
+        // Render the chart!
+        chart.render();
+
+    });
+});
+</script>
