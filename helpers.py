@@ -2,6 +2,7 @@ import json
 import errno
 from dateutil import parser
 import calendar
+import os
 
 def convert_to_unix(timestamp):
     '''Used to convert any timestamp format to unix time'''
