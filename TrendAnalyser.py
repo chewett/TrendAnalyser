@@ -37,7 +37,7 @@ class TrendAnalyser:
         self.conf.update(json.load(open(config_location)))
 
     def load_db_conf(self):
-        db_options = self.db.select("options", "*");
+        db_options = self.db.select("options", "*")
         for option in db_options:
             value = option["value"]
             if value == "true":
@@ -176,7 +176,7 @@ class TrendAnalyser:
             trend_details = trend_details[0]
 
             trends = self.db.select("trend_top_list_trends",
-                                    "*", "WHERE trend_top_list_id = '" + str(trend_details['trend_top_list_id']) + "'" );
+                                    "*", "WHERE trend_top_list_id = '" + str(trend_details['trend_top_list_id']) + "'" )
 
             trend_details['trends'] = []
             for trend in trends:
