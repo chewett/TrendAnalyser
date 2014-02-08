@@ -32,7 +32,8 @@ class TrendAnalyser:
                            select_type='dict', charset="utf8")
 
     def load_conf(self, config_location):
-        self.conf = {"debug" : False }
+        self.conf = {"debug" : False,
+                     "offline": False}
         self.conf.update(json.load(open(config_location)))
 
     def load_db_conf(self):
