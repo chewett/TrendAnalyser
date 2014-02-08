@@ -161,15 +161,19 @@ Information about the hashtag <b><span id="hashtagName">None Selected</span></b>
 
 </div>
 <div class="col-md-4">
+
 Data you have already downloaded that may be viewed: <br />
-<select id="gatheredDataList" size="10" onChange="listboxChange()">
 
-</select>
-
-<select id="combinedGraphList" multiple="multiple" size="10">
-
-</select>
-<br />
+<div class="row">
+    <div class="col-md-6">
+        <select style="width:100%" id="gatheredDataList" size="10" onChange="listboxChange()">
+        </select>
+    </div>
+    <div class="col-md-6">
+        <select style="width:100%" id="combinedGraphList" multiple="multiple" size="10">
+        </select>
+    </div>
+</div>
 
 <button id="combineAdd" onclick="combineAdd();">Add</button>
 <button id="combineRemove" onclick="combineRemove();">Remove</button>
