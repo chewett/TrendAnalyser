@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.5/dijit/themes/claro/claro.css" media="screen">
 <script>
 
 var searchedData = {};
@@ -101,6 +102,7 @@ function renderGraph(terms) {
             "dojox/charting/themes/Claro",
 
             "dojox/charting/widget/Legend",
+            "dojox/charting/action2d/Tooltip",
 
             // Charting plugins: 
             // 	Require the Pie type of Plot 
@@ -111,7 +113,7 @@ function renderGraph(terms) {
             "dojox/charting/axis2d/Default",
             // Wait until the DOM is ready
             "dojo/domReady!"
-        ], function(Chart, theme, Legend, PiePlot){
+        ], function(Chart, theme, Legend, Tooltip, PiePlot){
 
             // Create the chart within it's "holding" node
             chart = new Chart("chartNode");
@@ -125,6 +127,7 @@ function renderGraph(terms) {
                 markers: true
             });
 
+            var tip = new Tooltip(chart, "default");
             // Add axes
             chart.addAxis("x", {
             //    labels: xAxis
