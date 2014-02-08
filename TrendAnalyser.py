@@ -345,3 +345,10 @@ class TrendAnalyser:
         details = self.db.select("words_negative", "*")
 
         return details
+
+    def set_option(self, key, value):
+        existing = self.db.select("options", "*", "WHERE key = '" + key + "' LIMIT 1;")
+        if existing:
+            self.db.update("options", {"value" : value}, "WHERE key = '" + key + "' LIMIT 1;")
+        else:
+            self.db.insert("options", {"key" : key, "value" : value})
