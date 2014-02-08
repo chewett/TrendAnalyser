@@ -45,6 +45,9 @@ function searchTerm(term) {
     currentTerm = term;
 
     $("#chartNode").html("Loading Graph");
+
+    $("#graphTitleMultiple").hide();
+    $("#graphTitleSingle").show();
     $("#hashtagName").html(term);
 
     if(term in searchedData) {
@@ -73,6 +76,9 @@ function combineRemove() {
 }
 
 function combineGenerate() {
+    $("#graphTitleSingle").hide();
+    $("#graphTitleMultiple").show();
+
     graphingTerms = [];
     $("#combinedGraphList").children().each(function() {
         graphingTerms.push($(this).text());
@@ -169,7 +175,8 @@ Search for information about past trends entering the trending data lists.
 <div class="row">
 
 <div class="col-md-8">
-Information about the hashtag <b><span id="hashtagName">None Selected</span></b>
+<div id="graphTitleSingle">Information about the hashtag <b><span id="hashtagName">None Selected</span></b></div>
+<div id="graphTitleMultiple" style="display: none;">Information about multiple hashtags</div>
 
 <div id="chartNode" style="width:100%; height:500px"></div>
 <div id="legend"></div>
