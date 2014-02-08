@@ -71,9 +71,10 @@ function combineRemove() {
 
 function combineGenerate() {
     graphingTerms = [];
-    $("#combinedGraphList").find(":selected").each(function() {
+    $("#combinedGraphList").children().each(function() {
         graphingTerms.push($(this).text());
     });
+    console.log(graphingTerms);
     renderGraph(graphingTerms);
 }
 
