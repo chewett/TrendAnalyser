@@ -2,6 +2,7 @@
 
 var searchedData = {};
 var currentTerm = false;
+var combinedGraphList = {};
 
 function dayToMeaning(day) {
     return day % 365;
@@ -17,6 +18,13 @@ function updateListbox() {
         }
 
         $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term+"</option>");
+    }
+}
+
+function updateCombinedGraphListbox() {
+    $("#combinedGraphList").html("");
+    for(term in combinedGraphList) {
+        $("#combinedGraphList").append("<option value='"+term+"'>"+term+"</option>");
     }
 }
 
@@ -45,6 +53,24 @@ function searchTerm(term) {
             renderGraph([term]);
         });
     }
+}
+
+function combineAdd() {
+    option = $("#gatheredDataList").find(":selected").text();
+    combinedGraphList[option] = true;
+    updateCombinedGraphListbox();
+}
+
+function combineRemove() {
+    option = $("#combinedGraphList").find(":selected").text();
+    console.log(option)
+    delete combinedGraphList[option];
+    console.log(combinedGraphList);
+    updateCombinedGraphListbox();
+}
+
+function combineGenerate() {
+
 }
 
 function renderGraph(terms) {
@@ -134,6 +160,16 @@ Data you have already downloaded that may be viewed: <br />
 <select id="gatheredDataList" size="10" onChange="listboxChange()">
 
 </select>
+
+<select id="combinedGraphList" multiple="multiple" size="10">
+
+</select>
+<br />
+
+<button id="combineAdd" onclick="combineAdd();">Add</button>
+<button id="combineRemove" onclick="combineRemove();">Remove</button>
+<button id="combineGenerate" onclick="combineGenerate();">Generate</button>
+
 </div>
 
 </div>
