@@ -3,6 +3,7 @@ import json
 class StreamMessage:
 
     def __init__(self, tweet_data, disconnect_closes=True):
+        '''Sets up the StreamMessage object by passing in a json object'''
         try: #assume they are passing in json
             self.data = json.loads(tweet_data)
         #if not json, assume its a dict and use it as the data
@@ -12,6 +13,7 @@ class StreamMessage:
         self.disconnect_closes = disconnect_closes
 
     def get_type(self):
+        '''Used to work out what type the message is'''
         try:
             if "delete" in self.data:
                 return "delete"
@@ -39,6 +41,7 @@ class StreamMessage:
         return "unknown"
 
     def get_hashtags(self):
+        '''Used to get the hashtags out of the message'''
         hashtags = []
         for hashtag in self.data['entities']['hashtags']:
             hashtags.append(hashtag['text'])
