@@ -40,6 +40,9 @@ class TrendAnalyser:
                            self.conf['database_schema'],
                            select_type='dict', charset="utf8")
 
+        # We want to see the SQL it was running when it errors for debugging
+        self.db.print_sql_errors = True
+
     def load_conf(self, config_location):
         '''Loads the config from the given conf file location'''
         self.conf = {"debug" : False,
