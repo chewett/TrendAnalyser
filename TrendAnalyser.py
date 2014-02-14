@@ -13,7 +13,7 @@ from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
 from StreamMessage import StreamMessage
 import _mysql_exceptions
-from helpers import save_data, convert_to_unix
+from helpers import save_data, convert_to_unix, escape
 
 class TrendAnalyser:
     '''Holds all connection information with the database and Twitter'''
@@ -88,24 +88,26 @@ class TrendAnalyser:
     def _get_hashtag_id(self, hashtag):
         hid = self.db.select("hashtags", "hid", "WHERE hashtag = '" + hashtag + "' LIMIT 1;")
         if hid:
-            return hid['hid']
+            return hid[0]['hid']
         else:
             self.db.insert("hashtags", {"hashtag" : hashtag})
 
         hid = self.db.select("hashtags", "hid", "WHERE hashtag = '" + hashtag + "' LIMIT 1;")
-        return hid['hid']
+        return hid[0]['hid']
 
     def _get_mention_id(self, user_id, name, screen_name):
-        mid = self.db.select("mentions", "mid", "WHERE user_id = '" + user_id + "'" + 
-                                                      "name = '" + name + "'" + 
-                                                      "screen_name = '" + screen_name + "' LIMIT 1;")
+        mid = self.db.select("mentions", "mid", "WHERE user_id = '" + str(user_id) + "' " +
+                                                      "and name = '" + escape(name) + "' " + 
+                                                      "and screen_name = '" + escape(screen_name) + "' LIMIT 1;")
         if mid:
-            return mid['mid']
+            return mid[0]['mid']
         else:
             self.db.insert("mentions", {"user_id": user_id, "name": name, "screen_name": screen_name})
 
-        mid = self.db.select("mentions", "mid", "WHERE mention = '" + mention + "' LIMIT 1;")
-        return mid['mid']
+        mid = self.db.select("mentions", "mid", "WHERE user_id = '" + str(user_id) + "' " +
+                                                      "and name = '" + escape(name) + "' " + 
+                                                      "and screen_name = '" + escape(screen_name) + "' LIMIT 1;")
+        return mid[0]['mid']
 
     def save_sample_data_db(self, json_data):
         '''Saves as little as possible from the sample API to the database'''

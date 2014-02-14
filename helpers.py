@@ -22,3 +22,5 @@ def save_data(json_data, location):
 
     json.dump(json_data, open(location, 'w'))
 
+def escape(string):
+    return string.replace("'", "\\'")
