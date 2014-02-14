@@ -8,4 +8,4 @@ CREATE TABLE `woeid_data` (
     `placeName` varchar(50) DEFAULT NULL,
     `url` varchar(254) DEFAULT NULL,
     PRIMARY KEY (`woeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

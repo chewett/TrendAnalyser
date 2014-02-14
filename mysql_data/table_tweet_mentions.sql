@@ -6,4 +6,4 @@ CREATE TABLE `tweet_mentions` (
     PRIMARY KEY (`tweetId`,`user_id`),
     KEY `fk_tweet_mentions_1` (`tweetId`),
     CONSTRAINT `fk_tweet_mentions_1` FOREIGN KEY (`tweetId`) REFERENCES `tweet_details` (`tweetId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
