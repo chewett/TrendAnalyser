@@ -85,6 +85,28 @@ class TrendAnalyser:
                                 ".json")
         save_data(json_data, filelocation)
 
+    def _get_hashtag_id(self, hashtag):
+        hid = self.db.select("hashtags", "hid", "WHERE hashtag = '" + hashtag + "' LIMIT 1;")
+        if hid:
+            return hid['hid']
+        else:
+            self.db.insert("hashtags", {"hashtag" : hashtag})
+
+        hid = self.db.select("hashtags", "hid", "WHERE hashtag = '" + hashtag + "' LIMIT 1;")
+        return hid['hid']
+
+    def _get_mention_id(self, user_id, name, screen_name):
+        mid = self.db.select("mentions", "mid", "WHERE user_id = '" + user_id + "'" + 
+                                                      "name = '" + name + "'" + 
+                                                      "screen_name = '" + screen_name + "' LIMIT 1;")
+        if mid:
+            return mid['mid']
+        else:
+            self.db.insert("mentions", {"user_id": user_id, "name": name, "screen_name": screen_name})
+
+        mid = self.db.select("mentions", "mid", "WHERE mention = '" + mention + "' LIMIT 1;")
+        return mid['mid']
+
     def save_sample_data_db(self, json_data):
         '''Saves as little as possible from the sample API to the database'''
         msg = StreamMessage(json_data)
@@ -110,10 +132,9 @@ class TrendAnalyser:
                         raise
 
                 for mention in msg.data['entities']['user_mentions']:
+                    mid = self._get_mention_id(mention["id"], mention["name"], mention["screen_name"])
                     mention_details = {"tweetId": msg.data["id"],
-                                       "user_id": mention["id"],
-                                       "name" : mention["name"],
-                                       "screen_name" : mention["screen_name"]}
+                                       "mid": mid}
                     try:
                         self.db.insert("tweet_mentions", mention_details)
                     except _mysql_exceptions.IntegrityError as err:
@@ -123,7 +144,9 @@ class TrendAnalyser:
                             raise
 
                 for hashtag in msg.get_hashtags():
-                    tweet_hashtags = {"tweetId" : msg.data['id'], "hashtag" : hashtag}
+                    hid = self._get_hashtag_id(hashtag)
+
+                    tweet_hashtags = {"tweetId" : msg.data['id'], "hid" : hid}
                     try:
                         self.db.insert("tweet_hashtags", tweet_hashtags)
                     except _mysql_exceptions.IntegrityError as err:
