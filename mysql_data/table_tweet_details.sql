@@ -6,4 +6,4 @@ CREATE TABLE `tweet_details` (
     PRIMARY KEY (`tweetId`),
     KEY `positive` (`positive` DESC),
     KEY `negative` (`negative` DESC)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

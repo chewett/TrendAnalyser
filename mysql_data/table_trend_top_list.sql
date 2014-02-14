@@ -4,4 +4,4 @@ CREATE TABLE `trend_top_list` (
     `as_of` int(11) NOT NULL,
     `created_at` int(11) NOT NULL,
     PRIMARY KEY (`trend_top_list_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
