@@ -240,7 +240,7 @@ class TrendAnalyser:
         '''Gets the details about a specific hashtag from the database'''
         hid = self._get_hashtag_id(search_term)
         details = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.*",
-                                 "WHERE hid = '"+ hid +"'")
+                                 "WHERE hid = '"+ str(hid) +"'")
         search_details = {'hashtags' : details, 'hashtag' : search_term}
         return search_details
 
@@ -282,7 +282,7 @@ class TrendAnalyser:
         mid = self._get_mention_id(search_term)
         details = self.db.select("tweet_mentions m left join tweet_details d on m.tweetId = d.tweetId",
                                  "d.*",
-                                 "WHERE mid = '" + mid +"'")
+                                 "WHERE mid = '" + str(mid) +"'")
         search_details = {'mentions' : details, 'screen_name' : search_term}
         return search_details
 
