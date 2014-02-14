@@ -19,7 +19,8 @@ database = TA.conf['database_schema']
 with open("db_creation_code.sql", "w") as f:
     f.write("CREATE USER '" + username + "'@'localhost' IDENTIFIED BY '" + password + "';")
     f.write("GRANT ALL PRIVILEGES ON *.* TO '" + username + "'@'localhost' WITH GRANT OPTION;")
-    f.write("CREATE SCHEMA '" + database + "';")
+    f.write("CREATE SCHEMA " + database + ";")
+    f.write("USE " + database + ";")
 
     for db_files in os.listdir("../mysql_data/"):
         with open(os.path.join("../mysql_data", db_files)) as sql_file:
