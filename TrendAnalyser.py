@@ -280,6 +280,45 @@ class TrendAnalyser:
 
         return data
 
+    def _new_get_hashtag_frequency(self, search_term):
+        time_period = 86400# seconds in a day
+
+        hid = self._get_hashtag_id(search_term)
+        #smallest_value = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.created_at",
+        #                                "WHERE hid = '" + str(hid) + "' order by created_at asc LIMIT 1;")
+        #largest_value = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.created_at",
+        #                               "WHERE hid = '" + str(hid) + "'order by created_at desc LIMIT 1;")
+        tweet_spikes = {}
+        '''
+        if not smallest_value:
+            return []
+        else:
+            smallest_value = (smallest_value[0]['created_at'] / time_period) * time_period
+            largest_value = largest_value[0]['created_at']
+        '''
+
+        smallest_value = 1392420073
+        largest_value = 1392478217
+
+        value = smallest_value
+
+        while value < largest_value:
+            spike = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "count(d.created_at) as c",
+                                          "WHERE hid = '" + str(hid) + "' AND created_at > '" + str(value) + "' AND created_at < '" + str(value + time_period) + "';")
+            if spike:
+                tweet_spikes[value] = spike[0]['c']
+            else:
+                tweet_spikes[value] = 0
+            value += time_period
+
+        data = []
+        for spike in tweet_spikes:
+            data.append({"x": int(spike), "y": tweet_spikes[spike]})
+
+        data.sort(key=lambda x : x['x'])
+
+        return data
+
     def _get_mention_details(self, search_term):
         '''Returns data about a specific mention screenname'''
         mid = self._get_mention_id(search_term)
