@@ -3,10 +3,6 @@
 var searchedData = {};
 var currentTerm = false;
 
-function dayToMeaning(day) {
-    return day % 365;
-}
-
 function updateListbox() {
     $("#gatheredDataList").html("");
     for(term in searchedData){

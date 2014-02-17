@@ -6,10 +6,6 @@ var combinedGraphList = {};
 var chart = false;
 var legend = false;
 
-function dayToMeaning(day) {
-    return day % 365;
-}
-
 function updateListbox() {
     $("#gatheredDataList").html("");
     for(term in searchedData){
