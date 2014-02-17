@@ -5,5 +5,10 @@
         <data xmlns="http://www.netbeans.org/ns/clientside-project/1">
             <name>TrendAnalyser</name>
         </data>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>hashtags</word>
+            <word>tweeted</word>
+            <word>woeids</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
