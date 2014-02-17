@@ -109,16 +109,43 @@ function renderGraph(chartData) {
 <div class="row">
 
 <div class="col-md-8">
-Information about the mention <b><span id="mentionName">None Selected</span></b>
-
-<div id="chartNode" style="width:500px; height:500px"></div>
-
+<div id="graphTitleSingle">Information about the mention <b><span id="mentionName">None Selected</span></b></div>
+<div id="graphTitleMultiple" style="display: none;">Information about multiple mentions</div>
+    
+<div id="chartNode" style="width:100%; height:500px"></div>
+<div id="legend"></div>
 </div>
+    
 <div class="col-md-4">
-Data you have already downloaded that may be viewed: <br />
-<select id="gatheredDataList" size="10" onChange="listboxChange()">
+    
+<div class="row">
+    <div class="col-md-6">
+        <h3>Data already downloaded</h3>
+        <select style="width:100%" id="gatheredDataList" size="10" onChange="listboxChange()">
+        </select>
+    </div>
+    <div class="col-md-6">
+        <h3>Combined graph selector</h3>
+        <select style="width:100%" id="combinedGraphList" multiple="multiple" size="10">
+        </select>
+    </div>
+</div>
 
-</select>
+<button id="combineAdd" onclick="combineAdd();">Add</button>
+<button id="combineRemove" onclick="combineRemove();">Remove</button>
+<button id="combineGenerate" onclick="combineGenerate();">Generate</button>
+
+<ul>
+<li>Data that has been downloaded can be viewed by pressed the appropriate mention.
+This will be loaded fast since it is stored in memory, searching takes longer since
+it needs to search the database.</li>
+<li>If you wish to view multiple mention data you can add elements to the right
+listbox by selecting them in the data already downloaded box and pressing add.</li>
+<li>Remove will remove them from the combined graph selector box.</li>
+<li>Pressing Generate will generate the graph with all the mention elements from
+the combined graph selector list.</li>
+</ul>
+
 </div>
 
 </div>
