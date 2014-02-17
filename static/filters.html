@@ -1,15 +1,15 @@
 <script>
-    $.getJSON("filters.json", function(data) {
-        res = data.res;
-        $("#filter_terms").html("");
-        if(res.length === 0) {
-            $("#filter_terms").html("<tr><td>No filter terms!</td></tr>");
-        }else{
-            for (i in res) {
-                $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
-            }
+$.getJSON("filters.json", function(data) {
+    res = data.res;
+    $("#filter_terms").html("");
+    if(res.length === 0) {
+        $("#filter_terms").html("<tr><td>No filter terms!</td></tr>");
+    }else{
+        for (i in res) {
+            $("#filter_terms").append("<tr><td>" + res[i] + "</td></tr>");
         }
-    });
+    }
+});
 </script>
 
 <h1>Twitter Trend Analyser - Filter Terms</h1>

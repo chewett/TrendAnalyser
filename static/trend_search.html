@@ -1,28 +1,28 @@
 <script>
-    function searchTrend() {
-        $("#trendTable").show();
-        term = $("#trendTerm").val()
-        $.getJSON("trend_search.json/" + encodeURIComponent(term), function(data) {
-            res = data.res;
-            $("#trendTermName").html(res.search_term);
-            $("#trends").html("");
-            if(res.trends.length === 0) {
-                $("#trends").html("<tr><td colspan=\"6\">No data about that term.</td></tr>");
-            }else{
-                for (i in res.trends) {
-                    trendDetails = res.trends[i];
-                    $("#trends").append(
-                        "<tr><td>" + getTime(trendDetails.as_of) + "</td><td>" +
-                        getTime(trendDetails.created_at) + "</td><td>" +
-                        trendDetails.woeid + "</td><td>" +
-                        trendDetails.woeid_name + "</td><td>" +
-                        trendDetails.promoted_content + "</td><td>" +
-                        trendDetails.events + "</td><tr>"
-                    );
-                }
+function searchTrend() {
+    $("#trendTable").show();
+    term = $("#trendTerm").val()
+    $.getJSON("trend_search.json/" + encodeURIComponent(term), function(data) {
+        res = data.res;
+        $("#trendTermName").html(res.search_term);
+        $("#trends").html("");
+        if(res.trends.length === 0) {
+            $("#trends").html("<tr><td colspan=\"6\">No data about that term.</td></tr>");
+        }else{
+            for (i in res.trends) {
+                trendDetails = res.trends[i];
+                $("#trends").append(
+                    "<tr><td>" + getTime(trendDetails.as_of) + "</td><td>" +
+                    getTime(trendDetails.created_at) + "</td><td>" +
+                    trendDetails.woeid + "</td><td>" +
+                    trendDetails.woeid_name + "</td><td>" +
+                    trendDetails.promoted_content + "</td><td>" +
+                    trendDetails.events + "</td><tr>"
+                );
             }
-        });
-    }
+        }
+    });
+}
 </script>
 
 <h1>Twitter Trend Analyser - Recent Trends</h1>

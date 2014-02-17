@@ -1,16 +1,16 @@
 <script>
-    $.getJSON("trending_woeids_downloading.json", function(data) {
-        res = data.res;
-        $("#woeidData").html("");
-        if(res.length === 0) {
-            $("#woeidData").html("<tr><td>No woeids are being downloaded</td></tr>");
-        }else{
-            for (i in res) {
-                $("#woeidData").append("<tr><td>" + res[i]["woeid"] + "</td><td>" +
-                                       res[i]["name"] + "</td></tr>");
-            }
+$.getJSON("trending_woeids_downloading.json", function(data) {
+    res = data.res;
+    $("#woeidData").html("");
+    if(res.length === 0) {
+        $("#woeidData").html("<tr><td>No woeids are being downloaded</td></tr>");
+    }else{
+        for (i in res) {
+            $("#woeidData").append("<tr><td>" + res[i]["woeid"] + "</td><td>" +
+                                   res[i]["name"] + "</td></tr>");
         }
-    });
+    }
+});
 </script>
 
 <h1>Twitter Trend Analyser - Trending woeids Downloading</h1>
