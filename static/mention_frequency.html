@@ -2,6 +2,9 @@
 
 var searchedData = {};
 var currentTerm = false;
+var combinedGraphList = {};
+var chart = false;
+var legend = false;
 
 function updateListbox() {
     $("#gatheredDataList").html("");
@@ -13,6 +16,13 @@ function updateListbox() {
         }
 
         $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term+"</option>");
+    }
+}
+
+function updateCombinedGraphListbox() {
+    $("#combinedGraphList").html("");
+    for(term in combinedGraphList) {
+        $("#combinedGraphList").append("<option value='"+term+"'>"+term+"</option>");
     }
 }
 
@@ -30,6 +40,9 @@ function searchTerm(term) {
     currentTerm = term;
 
     $("#chartNode").html("Loading Graph");
+    
+    $("#graphTitleMultiple").hide();
+    $("#graphTitleSingle").show();
     $("#mentionName").html(term);
 
     if(term in searchedData) {
@@ -41,6 +54,32 @@ function searchTerm(term) {
             renderGraph(chartData);
         });
     }
+}
+
+function combineAdd() {
+    option = $("#gatheredDataList").find(":selected").text();
+    combinedGraphList[option] = true;
+    updateCombinedGraphListbox();
+}
+
+function combineRemove() {
+    option = $("#combinedGraphList").find(":selected").text();
+    console.log(option)
+    delete combinedGraphList[option];
+    console.log(combinedGraphList);
+    updateCombinedGraphListbox();
+}
+
+function combineGenerate() {
+    $("#graphTitleSingle").hide();
+    $("#graphTitleMultiple").show();
+
+    graphingTerms = [];
+    $("#combinedGraphList").children().each(function() {
+        graphingTerms.push($(this).text());
+    });
+    console.log(graphingTerms);
+    renderGraph(graphingTerms);
 }
 
 function renderGraph(chartData) {
@@ -72,8 +111,8 @@ function renderGraph(chartData) {
             "dojo/domReady!"
         ], function(Chart, theme, PiePlot){
 
-            // Create the chart within it's "holding" node
-            var chart = new Chart("chartNode");
+             // Create the chart within it's "holding" node
+            chart = new Chart("chartNode");
 
             // Set the theme
             chart.setTheme(theme);
@@ -84,15 +123,24 @@ function renderGraph(chartData) {
                 markers: true
             });
 
+            var tip = new Tooltip(chart, "default");
+            var mag = new Magnify(chart, "default");
             // Add axes
             chart.addAxis("x", {
-                labels: xAxis
+            //    labels: xAxis TODO: Add the xAxis data back here
             });
             chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
-            chart.addSeries("Tweet Data",chartData);
+
+            for(i in terms) {
+                chart.addSeries(terms[i], searchedData[terms[i]]);
+            }
 
             // Render the chart!
             chart.render();
+            if(legend != false) {
+                legend.destroyRecursive(true);
+            }
+            legend = new Legend({chart: chart}, "legend");
         });
     }
 
