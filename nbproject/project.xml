@@ -6,13 +6,13 @@
             <name>TrendAnalyser</name>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>API</word>
             <word>Hashtag</word>
             <word>hashtags</word>
             <word>listbox</word>
             <word>tweeted</word>
             <word>url</word>
             <word>Woeid</word>
-            <word>woeid</word>
             <word>woeids</word>
         </spellchecker-wordlist>
     </configuration>
