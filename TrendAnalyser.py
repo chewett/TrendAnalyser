@@ -311,6 +311,8 @@ class TrendAnalyser:
                 tweet_spikes[value] = 0
             value += time_period
 
+        #TODO: add a "value": parameter into the data below and a text parameter
+        #so that it can added onto the xAxis data.
         data = []
         for spike in tweet_spikes:
             data.append({"x": int(spike), "y": tweet_spikes[spike]})
