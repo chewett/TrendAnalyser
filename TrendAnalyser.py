@@ -313,9 +313,8 @@ class TrendAnalyser:
         search_details = {'mentions' : details, 'screen_name' : search_term}
         return search_details
 
-    def _get_mention_frequency(self, search_term):
+    def _get_mention_frequency(self, search_term, time_period=86400):
         '''Returns data about a mention's popularity over time'''
-        time_period = 86400# seconds in a day
 
         details = self._get_mention_details(search_term)
         tweet_spikes = {}
