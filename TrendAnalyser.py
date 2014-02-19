@@ -284,15 +284,9 @@ class TrendAnalyser:
         time_period = 86400# seconds in a day
 
         hid = self._get_hashtag_id(search_term)
-        smallest_value = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.created_at",
-                                        "WHERE hid = '" + str(hid) + "' order by created_at asc LIMIT 1;")
         tweet_spikes = {}
 
-        if not smallest_value:
-            return []
-        else:
-            smallest_value = (smallest_value[0]['created_at'] / time_period) * time_period
-
+        smallest_value = int(self.conf["setup_time"])
         value = smallest_value
         largest_value = int(time.time())
 
