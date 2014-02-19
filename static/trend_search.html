@@ -2,7 +2,7 @@
 function searchTrend() {
     $("#trendTable").show();
     term = $("#trendTerm").val()
-    $.getJSON("trend_search.json/" + encodeURIComponent(term), function(data) {
+    $.getJSON("trend_search.json?term=" + encodeURIComponent(term), function(data) {
         res = data.res;
         $("#trendTermName").html(res.search_term);
         $("#trends").html("");
