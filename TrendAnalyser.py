@@ -247,9 +247,8 @@ class TrendAnalyser:
         search_details = {'hashtags' : details, 'hashtag' : search_term}
         return search_details
 
-    def _get_hashtag_frequency(self, search_term):
+    def _get_hashtag_frequency(self, search_term, time_period=86400):
         '''Returns data about a hashtag's popularity over time'''
-        time_period = 86400# seconds in a day
 
         details = self._get_hashtag_details(search_term)
         tweet_spikes = {}
@@ -280,9 +279,7 @@ class TrendAnalyser:
 
         return data
 
-    def _new_get_hashtag_frequency(self, search_term):
-        time_period = 86400# seconds in a day
-
+    def _new_get_hashtag_frequency(self, search_term, time_period=86400):
         hid = self._get_hashtag_id(search_term)
         tweet_spikes = {}
 
