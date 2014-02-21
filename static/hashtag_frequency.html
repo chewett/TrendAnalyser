@@ -5,6 +5,11 @@ var currentTerm = false;
 var combinedGraphList = {};
 var chart = false;
 var legend = false;
+var timePeriod = 86400; //one day
+
+function updateTimePeriod() {
+    timePeriod = $("#timePeriod").val();
+}
 
 function updateListbox() {
     $("#gatheredDataList").html("");
@@ -44,11 +49,12 @@ function searchTerm(term) {
     $("#graphTitleMultiple").hide();
     $("#graphTitleSingle").show();
     $("#hashtagName").html(term);
+    updateTimePeriod();
 
     if(term in searchedData) {
         renderGraph([term]);
     }else{
-        $.getJSON("hashtag_frequency_term=" + encodeURIComponent(term), function(data) {
+        $.getJSON("hashtag_frequency_term=" + encodeURIComponent(term) + " time=" + encodeURIComponent(timePeriod), function(data) {
             var chartData = data.res;
             searchedData[term] = chartData;
             renderGraph([term]);
@@ -173,6 +179,8 @@ Search for information about past trends entering the trending data lists.
 
 
 <div class="col-md-4">
+
+Time Period: <input type="text" id="timePeriod" value="86400"/>
 
 <div class="row">
     <div class="col-md-6">

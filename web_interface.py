@@ -17,10 +17,10 @@ def hashtags_search_json(term):
     '''Used to get the data for hashtag searches'''
     return {"res" : TA._get_hashtag_details(term)}
 
-@route("/hashtag_frequency_term=<term>")
-def hashtag_frequency_json(term):
+@route("/hashtag_frequency_term=<term> time=<timePeriod>")
+def hashtag_frequency_json(term, timePeriod):
     '''Used to get the data for hashtag frequency searches for the graphs'''
-    return {"res" : TA._get_hashtag_frequency(term)}
+    return {"res" : TA._get_hashtag_frequency(term, int(timePeriod))}
 
 @route("/mentions_term=<term>")
 def mentions_search_json(term):
