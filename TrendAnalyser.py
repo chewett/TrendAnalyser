@@ -248,38 +248,6 @@ class TrendAnalyser:
         return search_details
 
     def _get_hashtag_frequency(self, search_term, time_period=86400):
-        '''Returns data about a hashtag's popularity over time'''
-
-        details = self._get_hashtag_details(search_term)
-        tweet_spikes = {}
-        for hashtag in details['hashtags']:
-            if hashtag['created_at'] is None:
-                continue
-            created_at = hashtag['created_at']
-
-            if created_at / time_period in tweet_spikes:
-                tweet_spikes[created_at / time_period] += 1
-            else:
-                tweet_spikes[created_at / time_period] = 1
-
-        if not tweet_spikes:
-            return []
-
-        largest_value = max(tweet_spikes.keys())
-        smallest_value = min(tweet_spikes.keys())
-        for i in xrange(largest_value - smallest_value):
-            if not smallest_value + i in tweet_spikes:
-                tweet_spikes[smallest_value + i] = 0
-
-        data = []
-        for spike in tweet_spikes:
-            data.append({"x": int(spike), "y": tweet_spikes[spike]})
-
-        data.sort(key=lambda x : x['x'])
-
-        return data
-
-    def _new_get_hashtag_frequency(self, search_term, time_period=86400):
         hid = self._get_hashtag_id(search_term)
         tweet_spikes = {}
 
