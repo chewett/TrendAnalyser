@@ -12,22 +12,22 @@ app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
 
-@route("/hashtags.json?term=<term>")
+@route("/hashtags_term=<term>")
 def hashtags_search_json(term):
     '''Used to get the data for hashtag searches'''
     return {"res" : TA._get_hashtag_details(term)}
 
-@route("/hashtag_frequency.json?term=<term>")
+@route("/hashtag_frequency_term=<term>")
 def hashtag_frequency_json(term):
     '''Used to get the data for hashtag frequency searches for the graphs'''
     return {"res" : TA._get_hashtag_frequency(term)}
 
-@route("/mentions.json?term=<term>")
+@route("/mentions_term=<term>")
 def mentions_search_json(term):
     '''Used to get the data for mention searches'''
     return {"res" : TA._get_mention_details(term)}
 
-@route("/mention_frequency.json?term=<term>")
+@route("/mention_frequency_term=<term>")
 def mention_frequency_json(term):
     '''Used to get the data for mention frequency searchs for the graphs'''
     return {"res" : TA._get_mention_frequency(term)}

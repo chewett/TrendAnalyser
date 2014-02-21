@@ -39,20 +39,20 @@ require([
     chart.render();
 
 
-    $.getJSON("hashtag_frequency.json?term=Moriarty", function(data) {
+    $.getJSON("hashtag_frequency_term=Moriarty", function(data) {
         chart.addSeries("Tweet Data", data.res);
         chart.render();
 
     });
-    $.getJSON("hashtag_frequency.json?term=Watson", function(data2) {
+    $.getJSON("hashtag_frequency_term=Watson", function(data2) {
         chart.addSeries("Tweet Data 2", data2.res);
         chart.render();
     });
-    $.getJSON("hashtag_frequency.json?term=sherlockholmes", function(data2) {
+    $.getJSON("hashtag_frequency_term=sherlockholmes", function(data2) {
         chart.addSeries("Tweet Data 3", data2.res);
         chart.render();
     });
-    $.getJSON("hashtag_frequency.json?term=mycroftholmes", function(data2) {
+    $.getJSON("hashtag_frequency_term=mycroftholmes", function(data2) {
         chart.addSeries("Tweet Data 4", data2.res);
         chart.render();
     });
