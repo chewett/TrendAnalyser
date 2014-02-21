@@ -72,7 +72,7 @@ function updateValues() {
     $("#graphTitleSingle").show();
     $("#hashtagName").html(term);
     updateTimePeriod();
-    $.getJSON("hashtag_frequency_term=" + encodeURIComponent(term) + " time=" + encodeURIComponent(timePeriod), function(data) {
+    $.getJSON("hashtag_frequency.json", {term : term, timePeriod : timePeriod}).done( function(data) {
         var chartData = data.res;
         searchedData[term] = chartData;
         renderGraph([term]);
