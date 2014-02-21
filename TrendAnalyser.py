@@ -284,21 +284,30 @@ class TrendAnalyser:
 
     def _get_mention_frequency(self, search_term, time_period=86400):
         '''Returns data about a mention's popularity over time'''
-
-        #CURRENTLY BEING REDESIGNED
-        '''
-        mids = self._get_mention_ids(search_term)
         tweet_spikes = {}
 
-        smallest_value = int(self.conf["setup_time"]
+        smallest_value = int(self.conf["setup_time"])
         value = smallest_value
         largest_value = int(time.time())
 
         while value < largest_value:
-            spike = self.db.select("tweet_mentions m left join tweet_details d on m.tweetId = d.tweetId", "count(d.created_at) as c",
-                                   "WHERE hid = '" + str(mid)
+            spike = self.db.select("tweet_mentions_full", "count(created_at) as c",
+                                   "WHERE screen_name = '" + str(search_term) + "' AND created_at > '" + str(value) + "' AND created_at < '" + str(value + time_period) + "';")
+            if spike:
+                tweet_spikes[value] = spike[0]['c']
+            else:
+                tweet_spikes[value] = 0
+            value += time_period
 
-        '''
+        #TODO: add a "value": parameter into the data below and a text parameter
+        #so that it can added onto the xAxis data.
+        data = []
+        for spike in tweet_spikes:
+            data.append({"x": int(spike), "y": tweet_spikes[spike]})
+
+        data.sort(key=lambda x : x['x'])
+
+        return data
 
     def _get_trending_woeids_downloading(self):
         '''Gets the details of woeids you want to download from the database'''
