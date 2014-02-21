@@ -248,7 +248,6 @@ class TrendAnalyser:
         return search_details
 
     def _get_hashtag_frequency(self, search_term, time_period=86400):
-        hid = self._get_hashtag_id(search_term)
         tweet_spikes = {}
 
         smallest_value = int(self.conf["setup_time"])
@@ -256,8 +255,8 @@ class TrendAnalyser:
         largest_value = int(time.time())
 
         while value < largest_value:
-            spike = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "count(d.created_at) as c",
-                                          "WHERE hid = '" + str(hid) + "' AND created_at > '" + str(value) + "' AND created_at < '" + str(value + time_period) + "';")
+            spike = self.db.select("tweet_hashtags_full", "count(created_at) as c",
+                                   "WHERE hashtag = '" + str(search_term) + "' AND created_at > '" + str(value) + "' AND created_at < '" + str(value + time_period) + "';")
             if spike:
                 tweet_spikes[value] = spike[0]['c']
             else:
