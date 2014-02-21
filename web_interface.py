@@ -13,7 +13,7 @@ PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
 
 @route("/hashtags.json")
-def hashtags_search_json(term):
+def hashtags_search_json():
     '''Used to get the data for hashtag searches'''
     return {"res" : TA._get_hashtag_details(request.params["term"])}
 
@@ -23,12 +23,12 @@ def hashtag_frequency_json():
     return {"res" : TA._get_hashtag_frequency(request.params["term"], int(request.params["timePeriod"]))}
 
 @route("/mentions.json")
-def mentions_search_json(term):
+def mentions_search_json():
     '''Used to get the data for mention searches'''
     return {"res" : TA._get_mention_details(request.params["term"])}
 
 @route("/mention_frequency.json")
-def mention_frequency_json(term):
+def mention_frequency_json():
     '''Used to get the data for mention frequency searchs for the graphs'''
     return {"res" : TA._get_mention_frequency(request.params["term"])}
 
@@ -43,7 +43,7 @@ def trends_json():
     return {"res" : TA._get_latest_trends()}
 
 @route("/trend_search.json")
-def trends_search_json(term):
+def trends_search_json():
     '''Used to search through the trending items'''
     return {"res" : TA._get_trending_details(request.params["term"])}
 
