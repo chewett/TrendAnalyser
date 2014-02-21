@@ -4,7 +4,7 @@ This is the bottle powered web interface for the TrendAnalyser project
 
 import os
 
-from bottle import Bottle, route, static_file
+from bottle import Bottle, route, static_file, request
 from WookieDb import WookieDb
 from TrendAnalyser import TrendAnalyser
 
@@ -17,10 +17,10 @@ def hashtags_search_json(term):
     '''Used to get the data for hashtag searches'''
     return {"res" : TA._get_hashtag_details(term)}
 
-@route("/hashtag_frequency_term=<term> time=<timePeriod>")
-def hashtag_frequency_json(term, timePeriod):
+@route("/hashtag_frequency.json")
+def hashtag_frequency_json():
     '''Used to get the data for hashtag frequency searches for the graphs'''
-    return {"res" : TA._get_hashtag_frequency(term, int(timePeriod))}
+    return {"res" : TA._get_hashtag_frequency(request.params["term"], int(request.params["timePeriod"]))}
 
 @route("/mentions_term=<term>")
 def mentions_search_json(term):
