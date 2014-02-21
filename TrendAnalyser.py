@@ -247,9 +247,8 @@ class TrendAnalyser:
         search_details = {'hashtags' : details, 'hashtag' : search_term}
         return search_details
 
-    def _get_hashtag_frequency(self, search_term):
+    def _get_hashtag_frequency(self, search_term, time_period=86400):
         '''Returns data about a hashtag's popularity over time'''
-        time_period = 86400# seconds in a day
 
         details = self._get_hashtag_details(search_term)
         tweet_spikes = {}
@@ -280,27 +279,13 @@ class TrendAnalyser:
 
         return data
 
-    def _new_get_hashtag_frequency(self, search_term):
-        time_period = 86400# seconds in a day
-
+    def _new_get_hashtag_frequency(self, search_term, time_period=86400):
         hid = self._get_hashtag_id(search_term)
-        #smallest_value = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.created_at",
-        #                                "WHERE hid = '" + str(hid) + "' order by created_at asc LIMIT 1;")
-        #largest_value = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "d.created_at",
-        #                               "WHERE hid = '" + str(hid) + "'order by created_at desc LIMIT 1;")
         tweet_spikes = {}
-        '''
-        if not smallest_value:
-            return []
-        else:
-            smallest_value = (smallest_value[0]['created_at'] / time_period) * time_period
-            largest_value = largest_value[0]['created_at']
-        '''
 
-        smallest_value = 1392420073
-        largest_value = 1392478217
-
+        smallest_value = int(self.conf["setup_time"])
         value = smallest_value
+        largest_value = int(time.time())
 
         while value < largest_value:
             spike = self.db.select("tweet_hashtags h left join tweet_details d on h.tweetId = d.tweetId", "count(d.created_at) as c",
@@ -330,9 +315,8 @@ class TrendAnalyser:
         search_details = {'mentions' : details, 'screen_name' : search_term}
         return search_details
 
-    def _get_mention_frequency(self, search_term):
+    def _get_mention_frequency(self, search_term, time_period=86400):
         '''Returns data about a mention's popularity over time'''
-        time_period = 86400# seconds in a day
 
         details = self._get_mention_details(search_term)
         tweet_spikes = {}
