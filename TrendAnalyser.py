@@ -286,33 +286,20 @@ class TrendAnalyser:
     def _get_mention_frequency(self, search_term, time_period=86400):
         '''Returns data about a mention's popularity over time'''
 
-        details = self._get_mention_details(search_term)
+        #CURRENTLY BEING REDESIGNED
+        '''
+        mids = self._get_mention_ids(search_term)
         tweet_spikes = {}
-        for mention in details['mentions']:
-            if mention['created_at'] is None:
-                continue
-            created_at = mention['created_at']
 
-            if created_at / time_period in tweet_spikes:
-                tweet_spikes[created_at / time_period] += 1
-            else:
-                tweet_spikes[created_at / time_period] = 1
+        smallest_value = int(self.conf["setup_time"]
+        value = smallest_value
+        largest_value = int(time.time())
 
-        if not tweet_spikes:
-            return []
+        while value < largest_value:
+            spike = self.db.select("tweet_mentions m left join tweet_details d on m.tweetId = d.tweetId", "count(d.created_at) as c",
+                                   "WHERE hid = '" + str(mid)
 
-        largest_value = max(tweet_spikes.keys())
-        smallest_value = min(tweet_spikes.keys())
-        for i in xrange(largest_value - smallest_value):
-            if not smallest_value + i in tweet_spikes:
-                tweet_spikes[smallest_value + i] = 0
-
-        data = []
-        for spike in tweet_spikes:
-            data.append({"x": int(spike), "y": tweet_spikes[spike]})
-
-        data.sort(key=lambda x : x['x'])
-        return data
+        '''
 
     def _get_trending_woeids_downloading(self):
         '''Gets the details of woeids you want to download from the database'''
