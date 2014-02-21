@@ -62,6 +62,23 @@ function searchTerm(term) {
     }
 }
 
+function updateValues() {
+    term = $("#gatheredDataList").find(':selected').text();
+    currentTerm = term;
+
+    $("#chartNode").html("Loading Graph");
+
+    $("#graphTitleMultiple").hide();
+    $("#graphTitleSingle").show();
+    $("#hashtagName").html(term);
+    updateTimePeriod();
+    $.getJSON("hashtag_frequency_term=" + encodeURIComponent(term) + " time=" + encodeURIComponent(timePeriod), function(data) {
+        var chartData = data.res;
+        searchedData[term] = chartData;
+        renderGraph([term]);
+    });
+}
+
 function combineAdd() {
     option = $("#gatheredDataList").find(":selected").text();
     combinedGraphList[option] = true;
@@ -195,6 +212,7 @@ Time Period: <input type="text" id="timePeriod" value="86400"/>
     </div>
 </div>
 
+<button id="updateValues" onclick"updateValues();">Update</button>
 <button id="combineAdd" onclick="combineAdd();">Add</button>
 <button id="combineRemove" onclick="combineRemove();">Remove</button>
 <button id="combineGenerate" onclick="combineGenerate();">Generate</button>
