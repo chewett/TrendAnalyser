@@ -12,8 +12,8 @@ app = Bottle()
 PATH = os.path.dirname(os.path.abspath(__file__))
 TA = TrendAnalyser()
 
-@route("/hashtags.json")
-def hashtags_search_json():
+@route("/hashtags_<time_ignored>.json")
+def hashtags_search_json(time_ignored):
     '''Used to get the data for hashtag searches'''
     return {"res" : TA._get_hashtag_details(request.params["term"])}
 
@@ -22,48 +22,48 @@ def hashtag_frequency_json(time_ignored):
     '''Used to get the data for hashtag frequency searches for the graphs'''
     return {"res" : TA._get_hashtag_frequency(request.params["term"], int(request.params["timePeriod"]))}
 
-@route("/mentions.json")
-def mentions_search_json():
+@route("/mentions_<time_ignored>.json")
+def mentions_search_json(time_ignored):
     '''Used to get the data for mention searches'''
     return {"res" : TA._get_mention_details(request.params["term"])}
 
-@route("/mention_frequency.json")
-def mention_frequency_json():
+@route("/mention_frequency_<time_ignored>.json")
+def mention_frequency_json(time_ignored):
     '''Used to get the data for mention frequency searchs for the graphs'''
     return {"res" : TA._get_mention_frequency(request.params["term"])}
 
-@route("/filters.json")
-def filters_json():
+@route("/filters_<time_ignored>.json")
+def filters_json(time_ignored):
     '''Used to display what filters we are currently downloading'''
     return {"res" : TA._get_filter_keywords()}
 
-@route("/trends.json")
-def trends_json():
+@route("/trends_<time_ignored>.json")
+def trends_json(time_ignored):
     '''Used to display the latest trends in the database'''
     return {"res" : TA._get_latest_trends()}
 
-@route("/trend_search.json")
-def trends_search_json():
+@route("/trend_search_<time_ignored>.json")
+def trends_search_json(time_ignored):
     '''Used to search through the trending items'''
     return {"res" : TA._get_trending_details(request.params["term"])}
 
-@route("/woeid_data.json")
-def woeid_data_json():
+@route("/woeid_dat_<time_ignored>a.json")
+def woeid_data_json(time_ignored):
     '''Used to display all the woeid data'''
     return {"res" : TA._get_woeid_data()}
 
-@route("/words_positive.json")
-def words_positive_json():
+@route("/words_positive_<time_ignored>.json")
+def words_positive_json(time_ignored):
     '''Used to display all the positive words'''
     return {"res" : TA._get_words_positive()}
 
-@route("/words_negative.json")
-def words_negative_json():
+@route("/words_negative_<time_ignored>.json")
+def words_negative_json(time_ignored):
     '''Used to display all the negative words'''
     return {"res" : TA._get_words_negative()}
 
-@route("/trending_woeids_downloading.json")
-def trending_woeids_downloading():
+@route("/trending_woeids_downloading_<time_ignored>.json")
+def trending_woeids_downloading(time_ignored):
     '''Ued to display the woeid areas we are downloading'''
     return {"res" : TA._get_trending_woeids_downloading()}
 

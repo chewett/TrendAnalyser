@@ -1,5 +1,5 @@
 <script>
-$.getJSON("woeid_data.json", function(data) {
+$.getJSON("woeid_data_" + Date.now() + ".json", function(data) {
     res = data.res;
     $("#trendLocations").html("");
     if(res.length === 0) {

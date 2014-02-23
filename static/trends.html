@@ -1,5 +1,5 @@
 <script>
-$.getJSON("trends.json", function(data) {
+$.getJSON("trends_" + Date.now() + ".json", function(data) {
     res = data.res;
     $("#trends").html("");
     for (i in res) {
