@@ -1,5 +1,5 @@
 <script>
-$.getJSON("filters.json", function(data) {
+$.getJSON("filters_" + Date.now() + ".json", function(data) {
     res = data.res;
     $("#filter_terms").html("");
     if(res.length === 0) {

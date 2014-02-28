@@ -1,5 +1,5 @@
 <script>
-$.getJSON("words_negative.json", function(data) {
+$.getJSON("words_negative_" + Date.now() + ".json", function(data) {
     res = data.res;
     $("#negativeWords").html("");
     if(res.length === 0) {

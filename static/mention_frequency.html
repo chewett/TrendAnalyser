@@ -48,7 +48,7 @@ function searchTerm(term) {
     if(term in searchedData) {
         renderGraph(searchedData[term]);
     }else{
-        $.getJSON("mention_frequency.json", {term : term, timePeriod : 86400}).done(function(data) { //TODO: make this use the time period
+        $.getJSON("mention_frequency_" + Date.now() + ".json", {term : term, timePeriod : 86400}).done(function(data) { //TODO: make this use the time period
             var chartData = data.res;
             searchedData[term] = chartData;
             renderGraph(chartData);
@@ -82,26 +82,31 @@ function combineGenerate() {
     renderGraph(graphingTerms);
 }
 
-function renderGraph(chartData) {
+function renderGraph(mentions) {
     updateListbox();
     $("#chartNode").html("");
-    if(chartData.length === 0) {
+    if(false && chartData.length === 0) { //TODO: fix me
         $("#chartNode").html("No points in the database");
     }else{
+        /*
         var xAxis = [];
         for(x in chartData) {
             day = dayToMeaning(chartData[x].x);
             xAxis[x] = {value: chartData[x].x, text: "Day: " + day};
-        }
+        }*/
 
         require([
-             // Require the basic 2d chart resource
+            // Require the basic 2d chart resource
             "dojox/charting/Chart",
             // Require the theme of our choosing
             "dojox/charting/themes/Claro",
 
-            // Charting plugins: 
-            // 	Require the Pie type of Plot 
+            "dojox/charting/widget/Legend",
+            "dojox/charting/action2d/Tooltip",
+            "dojox/charting/action2d/Magnify",
+
+            // Charting plugins:☃
+            // →Require the Pie type of Plot☃
             "dojox/charting/plot2d/Lines",
             //plot markers
             "dojox/charting/plot2d/Markers",
@@ -109,7 +114,8 @@ function renderGraph(chartData) {
             "dojox/charting/axis2d/Default",
             // Wait until the DOM is ready
             "dojo/domReady!"
-        ], function(Chart, theme, PiePlot){
+        ], function(Chart, theme, Legend, Tooltip, Magnify, PiePlot){
+
 
              // Create the chart within it's "holding" node
             chart = new Chart("chartNode");
@@ -131,8 +137,8 @@ function renderGraph(chartData) {
             });
             chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
 
-            for(i in terms) {
-                chart.addSeries(terms[i], searchedData[terms[i]]);
+            for(i in mentions) {
+                chart.addSeries(mentions[i], searchedData[mentions[i]]);
             }
 
             // Render the chart!

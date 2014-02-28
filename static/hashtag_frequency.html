@@ -54,7 +54,7 @@ function searchTerm(term) {
     if(term in searchedData) {
         renderGraph([term]);
     }else{
-        $.getJSON("hashtag_frequency.json", {term : term, timePeriod : timePeriod}).done( function(data) {
+        $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod}).done( function(data) {
             var chartData = data.res;
             searchedData[term] = chartData;
             renderGraph([term]);
@@ -72,7 +72,7 @@ function updateValues() {
     $("#graphTitleSingle").show();
     $("#hashtagName").html(term);
     updateTimePeriod();
-    $.getJSON("hashtag_frequency.json", {term : term, timePeriod : timePeriod}).done( function(data) {
+    $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod}).done( function(data) {
         var chartData = data.res;
         searchedData[term] = chartData;
         renderGraph([term]);
@@ -197,7 +197,9 @@ Search for information about past trends entering the trending data lists.
 
 <div class="col-md-4">
 
-Time Period: <input type="text" id="timePeriod" value="86400"/>
+Time Period: <input type="text" id="timePeriod" value="86400"/> <br />
+Start Time: <input type="text" id="startTime" /><br />
+End time: <input type="text" id="endTime" />
 
 <div class="row">
     <div class="col-md-6">
