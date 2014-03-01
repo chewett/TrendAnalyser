@@ -45,6 +45,16 @@ function searchButton() {
     searchTerm(term);
 }
 
+function addDataToStore(data, term, start, end) {
+    if(searchedData[term] === undefined) {
+        searchedData[term] = {};
+    }
+    if(searchedData[term][start] === undefined) {
+        searchedData[term][start] = {};
+    }
+    searchedData[term][start][end] = data;
+}
+
 function searchTerm(term) {
     currentTerm = term;
 
@@ -60,8 +70,8 @@ function searchTerm(term) {
     }else{
         $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
             var chartData = data.res;
-            searchedData[term] = chartData;
-            renderGraph([term]);
+            addDataToStore(chartData, term, startTime, endTime);
+            renderGraph([[term, startTime, endTime]]);
         });
     }
 }
@@ -78,8 +88,8 @@ function updateValues() {
     updateTimePeriod();
     $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
         var chartData = data.res;
-        searchedData[term] = chartData;
-        renderGraph([term]);
+        addDataToStore(chartData, term, startTime, endTime);
+        renderGraph([[term, startTime, endTime]]);
     });
 }
 
@@ -160,7 +170,8 @@ function renderGraph(terms) {
             chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
 
             for(i in terms) {
-                chart.addSeries(terms[i], searchedData[terms[i]]);
+                console.log(terms);
+                chart.addSeries(terms[i][0], searchedData[terms[i][0]][terms[i][1]][terms[i][2]]);
             }
 
             // Render the chart!
