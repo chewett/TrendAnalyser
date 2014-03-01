@@ -27,6 +27,10 @@ def mentions_search_json(time_ignored):
     '''Used to get the data for mention searches'''
     return {"res" : TA._get_mention_details(request.params["term"])}
 
+@route("/recent_tweets_<time_ignored>.json")
+def recent_tweets_json(time_ignored):
+    return {"res" : TA._get_recent_tweets()}
+
 @route("/mention_frequency_<time_ignored>.json")
 def mention_frequency_json(time_ignored):
     '''Used to get the data for mention frequency searchs for the graphs'''
