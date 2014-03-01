@@ -191,11 +191,17 @@ class TrendAnalyser:
         for item in response.get_iterator():
             items += 1
             item_data.append(item)
+            if items < 10:
+                self._insert_current_tweet(item)
 
             if items > 1000:
+                self.db.query("DELETE FROM recent_tweets")
                 self.save_twitter_filter_data(item_data)
                 item_data = []
                 items = 0
+
+    def _insert_current_tweet(self, tweet):
+        self.db.insert("recent_tweets", {"tweetId" : tweet['id'], "tweet": tweet['text']})
 
     def _get_filter_keywords(self):
         '''Get all the filter keywords from the database'''
