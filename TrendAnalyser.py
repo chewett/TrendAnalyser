@@ -203,6 +203,10 @@ class TrendAnalyser:
     def _insert_current_tweet(self, tweet):
         self.db.insert("recent_tweets", {"tweetId" : tweet['id'], "tweet": tweet['text']})
 
+    def _get_recent_tweets(self):
+        tweets = self.db.select("recent_tweets", "*")
+        return tweets
+
     def _get_filter_keywords(self):
         '''Get all the filter keywords from the database'''
         terms = self.db.select("filter_status_terms", "*")
