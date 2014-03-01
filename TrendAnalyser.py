@@ -8,6 +8,7 @@ import os
 import time
 import md5
 import uuid
+import datetime
 
 from TwitterAPI import TwitterAPI
 from WookieDb import WookieDb
@@ -271,7 +272,9 @@ class TrendAnalyser:
         axis_values = []
         for spike in tweet_spikes:
             data.append({"x": int(spike/time_period), "y": tweet_spikes[spike]})
-            axis_values.append({"value": int(spike/time_period), "text": "d"+ str(int(spike / time_period))})
+            dt_object = datetime.datetime.fromtimestamp(int(spike))
+            axis_value = str(dt_object.day) + "/" + str(dt_object.month)
+            axis_values.append({"value": int(spike/time_period), "text": axis_value })
         data.sort(key=lambda x : x['x'])
         axis_values.sort(key=lambda x : x["value"])
 
