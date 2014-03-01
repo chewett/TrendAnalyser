@@ -21,13 +21,22 @@ def hashtags_search_json(time_ignored):
 def hashtag_frequency_json(time_ignored):
     '''Used to get the data for hashtag frequency searches for the graphs'''
 
-    start_time = int(request.params['startTime'])
-    if start_time == 0:
+    start_time = request.params['startTime']
+    if start_time == '':
         start_time = False
+    else:
+        start_time = int(start_time)
+        if start_time == 0:
+            start_time = False
 
-    end_time = int(request.params['endTime'])
-    if end_time == 0:
+    
+    end_time = request.params['endTime']
+    if end_time == '':
         end_time = False
+    else:
+        end_time = int(end_time)
+        if end_time == 0:
+            end_time = False
 
     return {"res" : TA._get_hashtag_frequency(request.params["term"],
                                               int(request.params["timePeriod"]),
