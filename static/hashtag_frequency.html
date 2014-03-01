@@ -23,12 +23,12 @@ function updateListbox() {
         for(start in searchedData[term]) {
             for(end in searchedData[term][start]) {
                 for(time in searchedData[term][start][end]) {
-
-                    if(term === currentTerm) {
+                    if(term+"#"+start+"#"+end+"#"+time === currentTerm) {
                         select = "selected='selected'";
+                    }else{
+                        select = "";
                     }
-
-                    $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term + "," + start + "," + end + ","  + time +"</option>");
+                    $("#gatheredDataList").append("<option value='"+term+"#"+start+"#"+end+"#"+time+"' "+ select +" >"+term + "#" + start + "#" + end + "#"  + time +"</option>");
                 }
             }
         }
@@ -44,7 +44,11 @@ function updateCombinedGraphListbox() {
 
 function listboxChange(){
     term = $("#gatheredDataList").find(':selected').text();
-    searchTerm(term);
+    details = term.split("#");
+    startTime = details[1];
+    endTime = details[2];
+    timePeriod = details[3];
+    searchTerm(details[0]);
 }
 
 function searchButton() {
@@ -81,7 +85,7 @@ function isDataInStore(term, start, end, time) {
 }
 
 function searchTerm(term) {
-    currentTerm = term;
+    currentTerm = term + "#"+startTime+"#"+endTime+"#"+timePeriod;
 
     $("#chartNode").html("Loading Graph");
 
@@ -91,7 +95,7 @@ function searchTerm(term) {
     updateTimePeriod();
 
     if(isDataInStore(term, startTime, endTime, timePeriod)) {
-        renderGraph([term,startTime, endTime, timePeriod]);
+        renderGraph([[term,startTime, endTime, timePeriod]]);
     }else{
         $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
             var chartData = data.res;
