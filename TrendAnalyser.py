@@ -268,12 +268,14 @@ class TrendAnalyser:
         #TODO: add a "value": parameter into the data below and a text parameter
         #so that it can added onto the xAxis data.
         data = []
+        axis_values = []
         for spike in tweet_spikes:
-            data.append({"x": int(spike), "y": tweet_spikes[spike]})
-
+            data.append({"x": int(spike/time_period), "y": tweet_spikes[spike]})
+            axis_values.append({"value": int(spike/time_period), "text": "d"+ str(int(spike / time_period))})
         data.sort(key=lambda x : x['x'])
+        axis_values.sort(key=lambda x : x["value"])
 
-        return data
+        return {"points": data, "axis_values": axis_values}
 
     def _get_mention_details(self, search_term):
         '''Returns data about a specific mention screenname'''

@@ -192,15 +192,12 @@ function renderGraph(terms) {
 
             var tip = new Tooltip(chart, "default");
             var mag = new Magnify(chart, "default");
-            // Add axes
-            chart.addAxis("x", {
-            //    labels: xAxis TODO: Add the xAxis data back here
-            });
             chart.addAxis("y", { vertical: true, min: 0, fixLower: "major", fixUpper: "major" });
 
             for(i in terms) {
                 console.log(terms);
-                chart.addSeries(terms[i][0], searchedData[terms[i][0]][terms[i][1]][terms[i][2]][terms[i][3]]);
+                chart.addSeries(terms[i][0], searchedData[terms[i][0]][terms[i][1]][terms[i][2]][terms[i][3]].points);
+                chart.addAxis("x", { labels: searchedData[terms[i][0]][terms[i][1]][terms[i][2]][terms[i][3]].axis_values});
             }
 
             // Render the chart!
