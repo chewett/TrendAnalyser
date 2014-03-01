@@ -142,7 +142,7 @@ function combineGenerate() {
 
     graphingTerms = [];
     $("#combinedGraphList").children().each(function() {
-        graphingTerms.push($(this).text());
+        graphingTerms.push($(this).text().split("#"));
     });
     console.log(graphingTerms);
     renderGraph(graphingTerms);
