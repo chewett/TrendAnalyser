@@ -1,6 +1,7 @@
-<script>
+i<script>
 
 var searchedData = {};
+var downloadedDataIndex = [];
 var currentTerm = false;
 var combinedGraphList = {};
 var chart = false;
@@ -8,6 +9,7 @@ var legend = false;
 var timePeriod = 86400; //one day
 var startTime = 0; //0 means start at start of range
 var endTime = 0; //0 means end at current time
+
 
 function updateTimePeriod() {
     timePeriod = $("#timePeriod").val();
@@ -18,13 +20,18 @@ function updateTimePeriod() {
 function updateListbox() {
     $("#gatheredDataList").html("");
     for(term in searchedData){
-        var select = "";
+        for(start in searchedData[term]) {
+            for(end in searchedData[term][start]) {
+                for(time in searchedData[term][start][end]) {
 
-        if(term === currentTerm) {
-            select = "selected='selected'";
+                    if(term === currentTerm) {
+                        select = "selected='selected'";
+                    }
+
+                    $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term + "," + start + "," + end + ","  + time +"</option>");
+                }
+            }
         }
-
-        $("#gatheredDataList").append("<option value='"+term+"' "+ select +" >"+term+"</option>");
     }
 }
 
@@ -45,14 +52,32 @@ function searchButton() {
     searchTerm(term);
 }
 
-function addDataToStore(data, term, start, end) {
+function addDataToStore(data, term, start, end, time) {
     if(searchedData[term] === undefined) {
         searchedData[term] = {};
     }
     if(searchedData[term][start] === undefined) {
         searchedData[term][start] = {};
     }
-    searchedData[term][start][end] = data;
+    if(searchedData[term][start][end] == undefined) {
+        searchedData[term][start][end] = {};
+    }
+
+    searchedData[term][start][end][time] = data;
+}
+
+function isDataInStore(term, start, end, time) {
+    if(searchedData[term] === undefined) {
+        return false;
+    }else if(searchedData[term][start] === undefined) {
+        return false;
+    }else if(searchedData[term][start][end] === undefined) {
+        return false;
+    }else if(searchedData[term][start][end][time] === undefined) {
+        return false;
+    }else{
+        return true;
+    }
 }
 
 function searchTerm(term) {
@@ -65,13 +90,13 @@ function searchTerm(term) {
     $("#hashtagName").html(term);
     updateTimePeriod();
 
-    if(term in searchedData) {
-        renderGraph([term]);
+    if(isDataInStore(term, startTime, endTime, timePeriod)) {
+        renderGraph([term,startTime, endTime, timePeriod]);
     }else{
         $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
             var chartData = data.res;
-            addDataToStore(chartData, term, startTime, endTime);
-            renderGraph([[term, startTime, endTime]]);
+            addDataToStore(chartData, term, startTime, endTime, timePeriod);
+            renderGraph([[term, startTime, endTime, timePeriod]]);
         });
     }
 }
@@ -88,8 +113,8 @@ function updateValues() {
     updateTimePeriod();
     $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
         var chartData = data.res;
-        addDataToStore(chartData, term, startTime, endTime);
-        renderGraph([[term, startTime, endTime]]);
+        addDataToStore(chartData, term, startTime, endTime, timePeriod);
+        renderGraph([[term, startTime, endTime, timePeriod]]);
     });
 }
 
@@ -171,7 +196,7 @@ function renderGraph(terms) {
 
             for(i in terms) {
                 console.log(terms);
-                chart.addSeries(terms[i][0], searchedData[terms[i][0]][terms[i][1]][terms[i][2]]);
+                chart.addSeries(terms[i][0], searchedData[terms[i][0]][terms[i][1]][terms[i][2]][terms[i][3]]);
             }
 
             // Render the chart!
