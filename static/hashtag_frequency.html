@@ -6,9 +6,13 @@ var combinedGraphList = {};
 var chart = false;
 var legend = false;
 var timePeriod = 86400; //one day
+var startTime = 0; //0 means start at start of range
+var endTime = 0; //0 means end at current time
 
 function updateTimePeriod() {
     timePeriod = $("#timePeriod").val();
+    startTime = $("#startTime").val();
+    endTime = $("#endTime").val();
 }
 
 function updateListbox() {
@@ -54,7 +58,7 @@ function searchTerm(term) {
     if(term in searchedData) {
         renderGraph([term]);
     }else{
-        $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod}).done( function(data) {
+        $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
             var chartData = data.res;
             searchedData[term] = chartData;
             renderGraph([term]);
@@ -72,7 +76,7 @@ function updateValues() {
     $("#graphTitleSingle").show();
     $("#hashtagName").html(term);
     updateTimePeriod();
-    $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod}).done( function(data) {
+    $.getJSON("hashtag_frequency_" + Date.now() +".json", {term : term, timePeriod : timePeriod, endTime: endTime, startTime : startTime}).done( function(data) {
         var chartData = data.res;
         searchedData[term] = chartData;
         renderGraph([term]);
@@ -198,8 +202,8 @@ Search for information about past trends entering the trending data lists.
 <div class="col-md-4">
 
 Time Period: <input type="text" id="timePeriod" value="86400"/> <br />
-Start Time: <input type="text" id="startTime" /><br />
-End time: <input type="text" id="endTime" />
+Start Time: <input type="text" id="startTime" value="0"/><br />
+End time: <input type="text" id="endTime" value="0" />
 
 <div class="row">
     <div class="col-md-6">

@@ -20,7 +20,10 @@ def hashtags_search_json(time_ignored):
 @route("/hashtag_frequency_<time_ignored>.json")
 def hashtag_frequency_json(time_ignored):
     '''Used to get the data for hashtag frequency searches for the graphs'''
-    return {"res" : TA._get_hashtag_frequency(request.params["term"], int(request.params["timePeriod"]))}
+    return {"res" : TA._get_hashtag_frequency(request.params["term"],
+                                              int(request.params["timePeriod"]),
+                                              int(request.params["startTime"]),
+                                              int(request.params["endTime"]))}
 
 @route("/mentions_<time_ignored>.json")
 def mentions_search_json(time_ignored):
