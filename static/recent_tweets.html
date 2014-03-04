@@ -1,0 +1,30 @@
+<script>
+$.getJSON("recent_tweets_" + Date.now() + ".json", function(data) {
+    res = data.res;
+    $("#recentTweets").html("");
+    if(res.length === 0) {
+        $("#recentTweets").html("<tr><td>No recent tweets have been downloaded</td></tr>");
+    }else{
+        for (i in res) {
+            $("#recentTweets").append("<tr><td>" + res[i]["tweetId"] + "</td><td>" +
+                                   res[i]["tweet"] + "</td></tr>");
+        }
+    }
+});
+</script>
+
+<h1>Twitter Trend Analyser - Recent Tweets</h1>
+
+<p>
+Here are some of the most recent tweets downloaded from the streaming API about the specified search terms.
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Tweet Id</th><th>Tweet</th></tr>
+    </thead>
+
+    <tbody id="recentTweets">
+        <tr><td colspan="2">Loading...</td></tr>
+    </tbody>
+</table>
