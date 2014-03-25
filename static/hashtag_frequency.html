@@ -56,6 +56,12 @@ function searchButton() {
     searchTerm(term);
 }
 
+function searchTrends() {
+    term = $("#trendingItems").val().slice(1);
+    console.log(term);
+    searchTerm(term);
+}
+
 function addDataToStore(data, term, start, end, time) {
     if(searchedData[term] === undefined) {
         searchedData[term] = {};
@@ -210,6 +216,21 @@ function renderGraph(terms) {
     }
 
 }
+
+$.getJSON("trends_" + Date.now() +".json").done(function(data) {
+    res = data.res;
+    for(woeid in res) {
+        console.log(res[woeid]['trends']);
+        for(i in res[woeid]['trends']){
+            term = res[woeid]['trends'][i]['name'];
+            if(term[0] === '#') {
+                $("#trendingItems").append("<option>" + term + "</option>");
+            }
+        }
+    }
+
+});
+
 </script>
 
 <h2>Hashtag Search</h2>
@@ -223,6 +244,8 @@ Notes:<br />
 
 Search for information about past trends entering the trending data lists.
 
+Current Trending Items:<br />
+<select id="trendingItems"></select> <button onClick="searchTrends();">Search </button><br />
 <input type="text" id="hashtagTerm" /><button onClick="searchButton();">Search</button><p>
 
 <div class="row">
