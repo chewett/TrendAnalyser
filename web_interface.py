@@ -72,7 +72,7 @@ def trends_search_json(time_ignored):
     '''Used to search through the trending items'''
     return {"res" : TA._get_trending_details(request.params["term"])}
 
-@route("/woeid_dat_<time_ignored>a.json")
+@route("/woeid_data_<time_ignored>.json")
 def woeid_data_json(time_ignored):
     '''Used to display all the woeid data'''
     return {"res" : TA._get_woeid_data()}
