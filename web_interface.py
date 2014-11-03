@@ -2,6 +2,8 @@
 This is the bottle powered web interface for the TrendAnalyser project
 '''
 
+exit("This application has SQL injection problems and needs to be fixed before deployment")
+
 import os
 
 from bottle import Bottle, route, static_file, request
